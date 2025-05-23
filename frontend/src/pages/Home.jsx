@@ -1,4 +1,6 @@
 import Hero from "../components/Layout/Hero";
+import FeaturedCollection from "../components/Products/FeaturedCollection";
+import FeaturesSection from "../components/Products/FeaturesSection";
 import GenderCollectionSection from "../components/Products/GenderCollectionSection";
 import NewArrivals from "../components/Products/NewArrivals";
 import ProductDeatails from "../components/Products/ProductDeatails";
@@ -72,6 +74,12 @@ const Home = () => {
         </h2>
         <ProductGrid products={placeholderProducts} />
       </div>
+
+      {/* Featured Collection */}
+      <FeaturedCollection />
+
+      {/* Features Section */}
+      <FeaturesSection />
     </div>
   );
 };
