@@ -1,13 +1,17 @@
-import { FaBoxOpen, FaClipboardList, FaSignOutAlt, FaStore, FaUser } from "react-icons/fa";
+import {
+  FaBoxOpen,
+  FaClipboardList,
+  FaSignOutAlt,
+  FaStore,
+  FaUser,
+} from "react-icons/fa";
 import { Link, NavLink, useNavigate } from "react-router";
 
-const AdminSidebar = () => {
-    const navigate = useNavigate(); 
-    const handleLogout = () => {
-        navigate("/"); 
-    }
-
-
+const AdminSidebar = ({isSidebarOpen, toggleSideBar}) => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    navigate("/");
+  };
 
   return (
     <div className="p-6">
@@ -21,6 +25,9 @@ const AdminSidebar = () => {
       <nav className="flex flex-col space-y-2">
         <NavLink
           to="/admin/users"
+          onClick={() => {
+            if (window.innerWidth < 768) toggleSideBar(); // close on mobile
+          }}
           className={({ isActive }) =>
             isActive
               ? "bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2"
@@ -32,6 +39,9 @@ const AdminSidebar = () => {
         </NavLink>
         <NavLink
           to="/admin/products"
+          onClick={() => {
+            if (window.innerWidth < 768) toggleSideBar(); // close on mobile
+          }}
           className={({ isActive }) =>
             isActive
               ? "bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2"
@@ -43,6 +53,9 @@ const AdminSidebar = () => {
         </NavLink>
         <NavLink
           to="/admin/orders"
+          onClick={() => {
+            if (window.innerWidth < 768) toggleSideBar(); // close on mobile
+          }}
           className={({ isActive }) =>
             isActive
               ? "bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2"
@@ -54,6 +67,9 @@ const AdminSidebar = () => {
         </NavLink>
         <NavLink
           to="/"
+          onClick={() => {
+            if (window.innerWidth < 768) toggleSideBar(); // close on mobile
+          }}
           className={({ isActive }) =>
             isActive
               ? "bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2"
@@ -66,9 +82,12 @@ const AdminSidebar = () => {
       </nav>
 
       <div className="mt-6">
-        <button onClick={handleLogout} className="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded  flex items-center justify-center space-x-2">
-            <FaSignOutAlt /> 
-            <span>Logout</span>
+        <button
+          onClick={handleLogout}
+          className="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded  flex items-center justify-center space-x-2"
+        >
+          <FaSignOutAlt />
+          <span>Logout</span>
         </button>
       </div>
     </div>

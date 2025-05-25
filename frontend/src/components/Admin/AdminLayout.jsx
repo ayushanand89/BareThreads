@@ -34,7 +34,7 @@ const AdminLayout = () => {
         } transition-transform duration-300 md:translate-x-0 md:static md:block z-20`}
       >
         {/* SideBar */}
-        <AdminSidebar />
+        <AdminSidebar isSidebarOpen={isSidebarOpen} toggleSideBar={toggleSideBar}/>
       </div>
 
       {/* Main Content */}
