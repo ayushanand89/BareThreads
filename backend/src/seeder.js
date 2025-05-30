@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { Product } from "./models/product.model.js";
 import { User } from "./models/user.model.js";
 import { products } from "../data/products.js";
+import { Cart } from "./models/cart.model.js";
 
 const seedData = async () => {
   try {
@@ -11,6 +12,7 @@ const seedData = async () => {
 
     // Clear existing products
     await Product.deleteMany();
+    await Cart.deleteMany(); 
     console.log("Existing products deleted");
 
     // Create a default admin user

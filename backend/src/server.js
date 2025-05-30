@@ -4,6 +4,7 @@ import "dotenv/config";
 import { connectDB } from "./config/db.js";
 import userRoutes from "./routes/user.routes.js";
 import productRoutes from "./routes/product.routes.js";
+import cartRoutes from "./routes/cart.routes.js"
 import cookieParser from "cookie-parser";
 
 const app = express();
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 // API Routes
 app.use("/api/user", userRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes); 
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
