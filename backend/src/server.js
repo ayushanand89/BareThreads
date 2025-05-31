@@ -8,6 +8,10 @@ import cartRoutes from "./routes/cart.routes.js";
 import checkoutRoutes from "./routes/checkout.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
+import subscriberRoutes from "./routes/subscriber.route.js";
+import adminRoutes from "./routes/admin.routes.js";
+import productAdminRoutes from "./routes/productAdmin.routes.js";
+import orderAdminRoutes from "./routes/adminOrder.routes.js"
 import cookieParser from "cookie-parser";
 
 const app = express();
@@ -31,6 +35,10 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/checkout", checkoutRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api", subscriberRoutes);
+app.use("/api/admin/users", adminRoutes);
+app.use("/api/admin/products", productAdminRoutes);
+app.use("/api/admin/orders", orderAdminRoutes); 
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);

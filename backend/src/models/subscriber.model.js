@@ -3,10 +3,13 @@ import mongoose from "mongoose";
 const subscriberSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true,
+    required: [true, "Email is required"],
     unique: true,
     trim: true,
-    lowercase: true,
+    match: [
+      /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+      "Please enter a valid email address",
+    ],
   },
   subscribedAt: {
     type: Date,
