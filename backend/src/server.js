@@ -16,7 +16,12 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // your frontend dev server
+    credentials: true, // MUST be true to allow cookies
+  })
+);
 app.use(cookieParser());
 
 const PORT = process.env.PORT || 3000;
@@ -29,7 +34,7 @@ app.get("/", (req, res) => {
 });
 
 // API Routes
-app.use("/api/user", userRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/checkout", checkoutRoutes);
