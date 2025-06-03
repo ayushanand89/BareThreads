@@ -6,7 +6,7 @@ export const fetchProductsByFilters = createAsyncThunk(
   "products/fetchByFilters",
   async ({
     collection,
-    size,
+    sizes,
     color,
     gender,
     minPrice,
@@ -19,9 +19,8 @@ export const fetchProductsByFilters = createAsyncThunk(
     limit,
   }) => {
     const query = new URLSearchParams();
-
     if (collection) query.append("collection", collection);
-    if (size) query.append("size", size);
+    if (sizes) query.append("size", sizes);
     if (color) query.append("color", color);
     if (gender) query.append("gender", gender);
     if (minPrice) query.append("minPrice", minPrice);
@@ -33,9 +32,7 @@ export const fetchProductsByFilters = createAsyncThunk(
     if (brand) query.append("brand", brand);
     if (limit) query.append("limit", limit);
 
-    const response = await axiosInstance.get(
-      `${import.meta.env.VITE_BACKEND_URL}/api/products?${query.toString()}`
-    );
+    const response = await axiosInstance.get(`/products?${query.toString()}`);
     return response.data.data;
   }
 );
@@ -49,22 +46,9 @@ export const fetchProductsByDetails = createAsyncThunk(
   }
 );
 
-// Async Thunk to fetch similar products
+// Async Thunk to update a product
 export const updateProduct = createAsyncThunk(
   "products/updateProduct",
-  //   async ({ id, productData }) => {
-  //     const response = await axiosInstance.put(
-  //       `${import.meta.env.VITE_BACKEND_URL}/api/products/${id}`,
-  //       productData,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-  //         },
-  //       }
-  //     );
-  //     return response.data.data;
-  //   }
-
   async ({ id, productData }) => {
     const response = await axiosInstance.put(`/products/${id}`, productData);
     return response.data.data;
@@ -75,7 +59,7 @@ export const updateProduct = createAsyncThunk(
 export const fetchSimilarProducts = createAsyncThunk(
   "products/fetchSimilarProducts",
   async ({ id }) => {
-    const response = await axiosInstance.get(`/products/${id}/similar`);
+    const response = await axiosInstance.get(`/products/similar/${id}`);
     return response.data.data;
   }
 );
@@ -84,7 +68,7 @@ const productsSlice = createSlice({
   name: "products",
   initialState: {
     products: [],
-    selectedProduct: null, // store the details of the single product
+    selectedProduct: null,
     similarProducts: [],
     loading: false,
     error: null,
@@ -98,8 +82,7 @@ const productsSlice = createSlice({
       maxPrice: "",
       sortBy: "",
       search: "",
-      material: "",
-      material: "",
+      material: "", // Removed duplicate
       collection: "",
     },
   },
@@ -118,15 +101,14 @@ const productsSlice = createSlice({
         maxPrice: "",
         sortBy: "",
         search: "",
-        material: "",
-        material: "",
+        material: "", // Removed duplicate
         collection: "",
       };
     },
   },
   extraReducers: (builder) => {
     builder
-      // handle fetching products with filter
+      // Handle fetching products with filters
       .addCase(fetchProductsByFilters.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -138,49 +120,52 @@ const productsSlice = createSlice({
       .addCase(fetchProductsByFilters.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      }) 
+      })
 
-      // handle fetching single product details
+      // Handle fetching single product details
       .addCase(fetchProductsByDetails.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchProductsByDetails.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload; 
+        state.selectedProduct = action.payload; // Store in selectedProduct, not products
       })
       .addCase(fetchProductsByDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })
 
-      // handle updating product
-      .addCase(updateProduct .pending, (state) => {
+      // Handle updating product
+      .addCase(updateProduct.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(updateProduct .fulfilled, (state, action) => {
+      .addCase(updateProduct.fulfilled, (state, action) => {
         state.loading = false;
-        const updatedProduct = action.payload; 
-        const index = state.products.findIndex((product) => product._id === updateProduct._id)
-
-        if(index !== -1) {
-            state.products[index] = updatedProduct; 
+        const updatedProduct = action.payload;
+        const index = state.products.findIndex(
+          (product) => product._id === updatedProduct._id // Fixed typo
+        );
+        if (index !== -1) {
+          state.products[index] = updatedProduct;
         }
       })
-      .addCase(updateProduct .rejected, (state, action) => {
+      .addCase(updateProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })
 
-      // fetch similar product
+      // Fetch similar products
       .addCase(fetchSimilarProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchSimilarProducts.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload; 
+        state.similarProducts = Array.isArray(action.payload)
+          ? action.payload
+          : []; // Store in similarProducts
       })
       .addCase(fetchSimilarProducts.rejected, (state, action) => {
         state.loading = false;
@@ -189,5 +174,5 @@ const productsSlice = createSlice({
   },
 });
 
-export const { setFilters, clearFilters } = productsSlice.actions; 
-export default productsSlice.reducer; 
+export const { setFilters, clearFilters } = productsSlice.actions;
+export default productsSlice.reducer;

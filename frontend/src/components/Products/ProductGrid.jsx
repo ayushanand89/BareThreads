@@ -1,6 +1,19 @@
 import { Link } from "react-router";
 
-const ProductGrid = ({ products }) => {
+const ProductGrid = ({ products, loading, error }) => {
+  if (loading) {
+    return <p className="text-center text-gray-500">Loading products...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center text-red-500">Error: {error}</p>;
+  }
+
+
+  if (!Array.isArray(products) || products.length === 0) {
+    return <p className="text-center text-gray-500">No products available.</p>;
+  }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {products.map((product, index) => (

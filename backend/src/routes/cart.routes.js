@@ -12,7 +12,7 @@ const router = Router();
 
 router.post("/", addToCart);
 router.put("/", updateQuantity);
-router.delete("/", removeProduct);
+router.post("/delete", removeProduct);
 router.get("/", getCartInfo);
 
 // merging guest cart into user cart on login

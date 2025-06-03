@@ -13,7 +13,7 @@ const createProduct = asyncHandler(async (req, res) => {
     sku,
     category,
     brand,
-    size,
+    sizes,
     colors,
     collections,
     material,
@@ -35,7 +35,7 @@ const createProduct = asyncHandler(async (req, res) => {
     sku,
     category,
     brand,
-    size,
+    sizes,
     colors,
     collections,
     material,
@@ -90,7 +90,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 const getAllProducts = asyncHandler(async (req, res) => {
   const {
     collection,
-    size,
+    sizes,
     color,
     gender,
     minPrice,
@@ -120,8 +120,8 @@ const getAllProducts = asyncHandler(async (req, res) => {
   if (brand) {
     query.brand = { $in: brand.split(",") };
   }
-  if (size) {
-    query.sizes = { $in: size.split(",") };
+  if (sizes) {
+    query.sizes = { $in: sizes.split(",") };
   }
   if (color) {
     query.colors = { $in: [color] };
@@ -219,6 +219,7 @@ const getSimilarProducts = asyncHandler(async (req, res) => {
 
 const getBestSeller = asyncHandler(async (req, res) => {
   const bestSeller = await Product.findOne().sort({ rating: -1 });
+  console.log("Best Seller Product:", bestSeller);
 
   if (!bestSeller) {
     throw new ApiError(404, "No best seller found");

@@ -79,7 +79,7 @@ export const removeFromCart = createAsyncThunk(
   "cart/removeFromCart",
   async ({ productId, guestId, userId, size, color }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.delete("/cart", {
+      const response = await axiosInstance.post("/cart/delete", {
         productId,
         guestId,
         userId,

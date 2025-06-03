@@ -6,7 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import CollectionPage from "./pages/CollectionPage";
-import ProductDeatails from "./components/Products/ProductDeatails";
+import ProductDetails from "./components/Products/ProductDetails";
 import Checkout from "./components/Cart/Checkout";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
@@ -36,7 +36,7 @@ const App = () => {
               path="collections/:collection"
               element={<CollectionPage />}
             />
-            <Route path="product/:id" element={<ProductDeatails />} />
+            <Route path="product/:id" element={<ProductDetails />} />
             <Route path="checkout" element={<Checkout />} />
             <Route
               path="order-confirmation"
