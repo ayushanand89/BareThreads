@@ -219,7 +219,6 @@ const getSimilarProducts = asyncHandler(async (req, res) => {
 
 const getBestSeller = asyncHandler(async (req, res) => {
   const bestSeller = await Product.findOne().sort({ rating: -1 });
-  console.log("Best Seller Product:", bestSeller);
 
   if (!bestSeller) {
     throw new ApiError(404, "No best seller found");

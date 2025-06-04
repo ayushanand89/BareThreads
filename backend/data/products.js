@@ -16,11 +16,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/3a6ec21064ad4c8bbd4eedcc40147ee2/3c947f5867944917af876f1e2c43e938.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/3a6ec21064ad4c8bbd4eedcc40147ee2/3c947f5867944917af876f1e2c43e938.jpg",
         altText: "Classic Oxford Button-Down Shirt Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/b21f8911f8bd49118eb1ba80139bc520/2872e5ec4e0649a492f700cf63539a3d.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/b21f8911f8bd49118eb1ba80139bc520/2872e5ec4e0649a492f700cf63539a3d.jpg",
         altText: "Classic Oxford Button-Down Shirt Back View",
       },
     ],
@@ -44,11 +44,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/1f9f3176e3944280a05d2f45da80b510/01f951859dba4f50a1b632a60ebe7c39.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/1f9f3176e3944280a05d2f45da80b510/01f951859dba4f50a1b632a60ebe7c39.jpg",
         altText: "Slim-Fit Stretch Shirt Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/8b5e7fcbedf444398655d27f7ddc6635/4717137af1f744d1974415b59c8755ef.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/8b5e7fcbedf444398655d27f7ddc6635/4717137af1f744d1974415b59c8755ef.jpg",
         altText: "Slim-Fit Stretch Shirt Back View",
       },
     ],
@@ -72,11 +72,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/f80fbef4c7a24d0a81db753ff0063b30/5f5d920a14b24352be6d94fc76bdbc6b.jpg?imwidth=762",
+        url: "https://img01.ztat.net/article/spp-media-p1/f80fbef4c7a24d0a81db753ff0063b30/5f5d920a14b24352be6d94fc76bdbc6b.jpg",
         altText: "Casual Denim Shirt Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/d171b9b3992140d3b03404562c5114ef/0612cb44dbf949618c7d8e4f0343a1c4.jpg?imwidth=762",
+        url: "https://img01.ztat.net/article/spp-media-p1/d171b9b3992140d3b03404562c5114ef/0612cb44dbf949618c7d8e4f0343a1c4.jpg",
         altText: "Casual Denim Shirt Back View",
       },
     ],
@@ -100,11 +100,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/77a310caf5494df88d3fb920418400c8/6afbd012bb95430e9084623e58ea372b.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/77a310caf5494df88d3fb920418400c8/6afbd012bb95430e9084623e58ea372b.jpg",
         altText: "Printed Resort Shirt Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/b940f0d00d294cdcb7370e7382925edd/f93c1af54f2448619c81202a873bb11b.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/b940f0d00d294cdcb7370e7382925edd/f93c1af54f2448619c81202a873bb11b.jpg",
         altText: "Printed Resort Shirt Back View",
       },
     ],
@@ -128,11 +128,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/bbad665b28ff4a499c7985e94d086e63/3f5301af3c4c46c38c246b1e1b55b3b2.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/bbad665b28ff4a499c7985e94d086e63/3f5301af3c4c46c38c246b1e1b55b3b2.jpg",
         altText: "Slim-Fit Easy-Iron Shirt Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/ad8d7529cfe142829e65eac0ef13e050/3880ac8577e5477091a92bb246445fd0.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/ad8d7529cfe142829e65eac0ef13e050/3880ac8577e5477091a92bb246445fd0.jpg",
         altText: "Slim-Fit Easy-Iron Shirt Front View",
       },
     ],
@@ -156,11 +156,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/b1f0f8065cdf4048b8b0889169efc6dc/61eebff5ef0d48fa845a8f8507d9f9c6.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/b1f0f8065cdf4048b8b0889169efc6dc/61eebff5ef0d48fa845a8f8507d9f9c6.jpg",
         altText: "Polo T-Shirt Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/2e0857072d92427d959a9b353dfdd840/4bafc0ac6e834dc9badc71125e69d644.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/2e0857072d92427d959a9b353dfdd840/4bafc0ac6e834dc9badc71125e69d644.jpg",
         altText: "Polo T-Shirt Back View",
       },
     ],
@@ -184,11 +184,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/ce2d44cff6a94cb78585e3b2abe66cea/5988d7066d614aee8136079fdd1400dc.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/ce2d44cff6a94cb78585e3b2abe66cea/5988d7066d614aee8136079fdd1400dc.jpg",
         altText: "Oversized Graphic T-Shirt Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/3c64a89c3c744d54b0abedfb95bea50a/a3f4d4eb1a444961b2a3590d41fcb9d4.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/3c64a89c3c744d54b0abedfb95bea50a/a3f4d4eb1a444961b2a3590d41fcb9d4.jpg",
         altText: "Oversized Graphic T-Shirt Back View",
       },
     ],
@@ -212,11 +212,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/89af06eb314d4e3f8ce3fd50a2ff887d/d375d2184c5b4e7c87a237a9db425d63.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/89af06eb314d4e3f8ce3fd50a2ff887d/d375d2184c5b4e7c87a237a9db425d63.jpg",
         altText: "Regular-Fit Henley Shirt Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/b92f958d94254cbca1ff6106ef7a1a49/685fb6a3771c416e8ef7287a98236985.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/b92f958d94254cbca1ff6106ef7a1a49/685fb6a3771c416e8ef7287a98236985.jpg",
         altText: "Regular-Fit Henley Shirt Back View",
       },
     ],
@@ -240,11 +240,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/2e9e7373713840a9826519fef1feb5dc/df5d0c5a0c0c42998c850f59aa99e07c.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/2e9e7373713840a9826519fef1feb5dc/df5d0c5a0c0c42998c850f59aa99e07c.jpg",
         altText: "Long-Sleeve Thermal Tee Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/5ce3cc29cfe140ed971d8c8cd49fa806/ae18668a4e694fdab2dbfffc15f2f05d.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/5ce3cc29cfe140ed971d8c8cd49fa806/ae18668a4e694fdab2dbfffc15f2f05d.jpg",
         altText: "Long-Sleeve Thermal Tee Back View",
       },
     ],
@@ -268,11 +268,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/b2bfe67d3db14f55a497cbf68b6d162f/a4990526520a40b88f7e26d23c25b020.png?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/b2bfe67d3db14f55a497cbf68b6d162f/a4990526520a40b88f7e26d23c25b020.png",
         altText: "V-Neck Classic T-Shirt Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/22055cef08d743a1a92bd495ad03cfef/3af49a364ead4650a25c343c332eaed5.png?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/22055cef08d743a1a92bd495ad03cfef/3af49a364ead4650a25c343c332eaed5.png",
         altText: "V-Neck Classic T-Shirt Back View",
       },
     ],
@@ -296,11 +296,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/315f26c03e964625b46b332db68001c5/3212521a5ef7403cb43cd38b9c619881.jpg?imwidth=762",
+        url: "https://img01.ztat.net/article/spp-media-p1/315f26c03e964625b46b332db68001c5/3212521a5ef7403cb43cd38b9c619881.jpg",
         altText: "Slim Fit Joggers Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/9caa170d488240808781bb0aa20dfa4f/f16bc903e5f34889957a205999c8feb3.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/9caa170d488240808781bb0aa20dfa4f/f16bc903e5f34889957a205999c8feb3.jpg",
         altText: "Slim Fit Joggers Back View",
       },
     ],
@@ -324,11 +324,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/84d5be7356344aa2af073f414372bfb0/f7f101275b9646c6b49ed89e510799b1.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/84d5be7356344aa2af073f414372bfb0/f7f101275b9646c6b49ed89e510799b1.jpg",
         altText: "Cargo Joggers Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/ef40c95d52684db8822e4aa495b2811b/41b6eee7da3f4e9da9f0bcf476ab9092.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/ef40c95d52684db8822e4aa495b2811b/41b6eee7da3f4e9da9f0bcf476ab9092.jpg",
         altText: "Cargo Joggers Back View",
       },
     ],
@@ -352,11 +352,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/8edf0139b40530758ce3b0739f1780a2/b18c9bee48d24effb8589221d1ba902f.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/8edf0139b40530758ce3b0739f1780a2/b18c9bee48d24effb8589221d1ba902f.jpg",
         altText: "Tapered Sweatpants Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/71fc9e1e445c35b2858523e7280a9f9c/5cd3c1aff0e6462490b1f75a8c6b1c44.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/71fc9e1e445c35b2858523e7280a9f9c/5cd3c1aff0e6462490b1f75a8c6b1c44.jpg",
         altText: "Tapered Sweatpants Back View",
       },
     ],
@@ -380,11 +380,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/042d6ddc365b46b4853a09f2d5056ec8/8f76c76fe89f4112a25f52d3b1408452.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/042d6ddc365b46b4853a09f2d5056ec8/8f76c76fe89f4112a25f52d3b1408452.jpg",
         altText: "Denim Jeans Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/34303a6c8ce7442ea161caa92a17b4c1/9e1fc94a2684472188a198101c882b06.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/34303a6c8ce7442ea161caa92a17b4c1/9e1fc94a2684472188a198101c882b06.jpg",
         altText: "Denim Jeans Back View",
       },
     ],
@@ -408,11 +408,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/2dbd94c634374ba5997a74a1ef90e4dc/3d0a84cdba4b4fb0a76bcc60cb3cc062.jpg?imwidth=762",
+        url: "https://img01.ztat.net/article/spp-media-p1/2dbd94c634374ba5997a74a1ef90e4dc/3d0a84cdba4b4fb0a76bcc60cb3cc062.jpg",
         altText: "Chino Pants Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/808c7214b0394e4188398a90e00c506c/6a110cb00922407c87b8a343ba11cc98.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/808c7214b0394e4188398a90e00c506c/6a110cb00922407c87b8a343ba11cc98.jpg",
         altText: "Chino Pants Back View",
       },
     ],
@@ -436,11 +436,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/3d4bf1f026fe46cb9dc54cb37126915a/63312f664f854dcb800b61ba9cf3fd19.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/3d4bf1f026fe46cb9dc54cb37126915a/63312f664f854dcb800b61ba9cf3fd19.jpg",
         altText: "Track Pants Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/8617b0198b1642c5aaf26954842588d5/bb38143d8ce2420aaae9a3a4a0c62d5d.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/8617b0198b1642c5aaf26954842588d5/bb38143d8ce2420aaae9a3a4a0c62d5d.jpg",
         altText: "Track Pants Back View",
       },
     ],
@@ -464,11 +464,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/480d228d5009466fbd3eedae26e59b6d/bd12f14d2c814196b9d8642475aed137.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/480d228d5009466fbd3eedae26e59b6d/bd12f14d2c814196b9d8642475aed137.jpg",
         altText: "Slim Fit Trousers Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/2062fa216fb54bf4abf2209954e43334/88205718092c4e478be343d6c95fdd95.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/2062fa216fb54bf4abf2209954e43334/88205718092c4e478be343d6c95fdd95.jpg",
         altText: "Slim Fit Trousers Back View",
       },
     ],
@@ -492,11 +492,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/d9c98ba8383349ad8e79ba25f4e9f5c3/92642b1f45dd4f0fb6d7a08243e21386.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/d9c98ba8383349ad8e79ba25f4e9f5c3/92642b1f45dd4f0fb6d7a08243e21386.jpg",
         altText: "Cargo Pants Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/15e4b7f37f1d4651b5e6905b5957ac82/582e435dec0c4508a137234d9cd7f1da.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/15e4b7f37f1d4651b5e6905b5957ac82/582e435dec0c4508a137234d9cd7f1da.jpg",
         altText: "Cargo Pants Back View",
       },
     ],
@@ -520,11 +520,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/5fc2d225a96f430ca41534ae55daa1d7/35aa0460a5754e60903b23247149efaf.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/5fc2d225a96f430ca41534ae55daa1d7/35aa0460a5754e60903b23247149efaf.jpg",
         altText: "Relaxed Fit Sweatpants Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/0b3c6b95349a41baa5d44bd846693477/9e046dc6f2d34522926e1da9fd10bca7.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/0b3c6b95349a41baa5d44bd846693477/9e046dc6f2d34522926e1da9fd10bca7.jpg",
         altText: "Relaxed Fit Sweatpants Back View",
       },
     ],
@@ -548,11 +548,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/e1306efeab0046db82042dfbd114cb0f/2d628d8437f34f85ad45bda41f82fb2e.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/e1306efeab0046db82042dfbd114cb0f/2d628d8437f34f85ad45bda41f82fb2e.jpg",
         altText: "Formal Dress Pants Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/6031a3de778342479afc30b81b46cacd/93ca13c4c88645e2ab7a44d8b7c9a78e.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/6031a3de778342479afc30b81b46cacd/93ca13c4c88645e2ab7a44d8b7c9a78e.jpg",
         altText: "Formal Dress Pants Back View",
       },
     ],
@@ -576,11 +576,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/2cd4b1654e3b40adb0a4be0082dc0593/a01477e531774135b0131c6d54d05065.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/2cd4b1654e3b40adb0a4be0082dc0593/a01477e531774135b0131c6d54d05065.jpg",
         altText: "High-Waist Skinny Jeans",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/88365431ac854b24937e4f48a3e5083b/25f7283ffbca4442a676f2c77f8da821.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/88365431ac854b24937e4f48a3e5083b/25f7283ffbca4442a676f2c77f8da821.jpg",
         altText: "High-Waist Skinny Jeans Back View",
       },
     ],
@@ -604,11 +604,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/2b95532cddb74e78aa58b2160d8207ae/1ed1073f730c4aca9940c784a093c5d9.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/2b95532cddb74e78aa58b2160d8207ae/1ed1073f730c4aca9940c784a093c5d9.jpg",
         altText: "Wide-Leg Trousers Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/0c98ae793fe4490ca6dd29138b2d58d7/f6e6f9b6915c408b88ac3470b6a47fef.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/0c98ae793fe4490ca6dd29138b2d58d7/f6e6f9b6915c408b88ac3470b6a47fef.jpg",
         altText: "Wide-Leg Trousers Back View",
       },
     ],
@@ -632,11 +632,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/643222550dc14722893758f0d515280f/9faaf5a683d24fe9a45b0218a4081db6.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/643222550dc14722893758f0d515280f/9faaf5a683d24fe9a45b0218a4081db6.jpg",
         altText: "Stretch Leggings Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/6a92494afc1242a4ac872be66ed07bc5/caccc53d22444d949b83eec93e34b387.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/6a92494afc1242a4ac872be66ed07bc5/caccc53d22444d949b83eec93e34b387.jpg",
         altText: "Stretch Leggings Back View",
       },
     ],
@@ -660,11 +660,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/75211d90cbe9456888d39851aa47dbc8/761da0cd220148e685187e9c31ad66be.jpg?imwidth=762",
+        url: "https://img01.ztat.net/article/spp-media-p1/75211d90cbe9456888d39851aa47dbc8/761da0cd220148e685187e9c31ad66be.jpg",
         altText: "Pleated Midi Skirt Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/209b17fe6e5f4bcf80c1abbf3ff22b33/1743e72609aa474b842065040f514c69.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/209b17fe6e5f4bcf80c1abbf3ff22b33/1743e72609aa474b842065040f514c69.jpg",
         altText: "Pleated Midi Skirt Back View",
       },
     ],
@@ -688,11 +688,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/144d30ea5c124ce39bd1260451336bb8/23113486108b4aaeb2d7d30f7d80f032.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/144d30ea5c124ce39bd1260451336bb8/23113486108b4aaeb2d7d30f7d80f032.jpg",
         altText: "Flared Palazzo Pants Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/c3be18f4f53a4bc6b624a9fd68a81c76/226c17ff26314c1bbe748174501bdcf0.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/c3be18f4f53a4bc6b624a9fd68a81c76/226c17ff26314c1bbe748174501bdcf0.jpg",
         altText: "Flared Palazzo Pants Back View",
       },
     ],
@@ -716,11 +716,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/e1c1afba46a14f15a73cee71933d9f00/edc4a35568a1477a95581099f0d613c9.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/e1c1afba46a14f15a73cee71933d9f00/edc4a35568a1477a95581099f0d613c9.jpg",
         altText: "High-Rise Joggers Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/d5c5acdf28fd485baf2e080905a6788d/8b9caf684e7248b29613f036f67c9b7f.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/d5c5acdf28fd485baf2e080905a6788d/8b9caf684e7248b29613f036f67c9b7f.jpg",
         altText: "High-Rise Joggers Back View",
       },
     ],
@@ -744,11 +744,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/03eb2e554d574cc4a9755c1e0abcf89d/5f8120563ffa480685d0e3b221c6529e.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/03eb2e554d574cc4a9755c1e0abcf89d/5f8120563ffa480685d0e3b221c6529e.jpg",
         altText: "Paperbag Waist Shorts Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/dd1223b122e04681800f19f7cf81b9d8/144b85de63ac4c46a6d830543c9b8a9b.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/dd1223b122e04681800f19f7cf81b9d8/144b85de63ac4c46a6d830543c9b8a9b.jpg",
         altText: "Paperbag Waist Shorts Back View",
       },
     ],
@@ -772,11 +772,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/e04080cc1666458b9b90e0d500437d28/dad9d34e9db74e7886ac708536dea731.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/e04080cc1666458b9b90e0d500437d28/dad9d34e9db74e7886ac708536dea731.jpg",
         altText: "Stretch Denim Shorts Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/b8a3f5e0d46d4c7faddf4dbdef0c5f68/6d592c74f5d946f494d923b9c815a341.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/b8a3f5e0d46d4c7faddf4dbdef0c5f68/6d592c74f5d946f494d923b9c815a341.jpg",
         altText: "Stretch Denim Shorts Back View",
       },
     ],
@@ -800,11 +800,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/4e7893d8fcd74d3e88cab0e06b121aae/8a2a95c06e0c42948b3f1966bfe3699f.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/4e7893d8fcd74d3e88cab0e06b121aae/8a2a95c06e0c42948b3f1966bfe3699f.jpg",
         altText: "Culottes Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/e6cc9f89e133494db9d43d5ef78c10e2/b0694d1b60ff47c0b7b9c2bba6676a7c.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/e6cc9f89e133494db9d43d5ef78c10e2/b0694d1b60ff47c0b7b9c2bba6676a7c.jpg",
         altText: "Culottes Back View",
       },
     ],
@@ -828,11 +828,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/7ebbe9973e1e49d39fd8a1b96ff2e24d/2fc9c98006884c759b770034257a445e.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/7ebbe9973e1e49d39fd8a1b96ff2e24d/2fc9c98006884c759b770034257a445e.jpg",
         altText: "Classic Pleated Trousers Front View",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/184e16350e744b5c944633382fd5dd0c/fabd2e619de349dc8fd4d40f91c42944.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/184e16350e744b5c944633382fd5dd0c/fabd2e619de349dc8fd4d40f91c42944.jpg",
         altText: "Classic Pleated Trousers Back View",
       },
     ],
@@ -856,11 +856,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/1bdf95336ee34ad7ad2b5efc8500fc8f/b8f3de77b3a04025b80f83cd2ef80763.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/1bdf95336ee34ad7ad2b5efc8500fc8f/b8f3de77b3a04025b80f83cd2ef80763.jpg",
         altText: "Knitted Cropped Top",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/6d4067da66aa45cd97547bd2281397ad/e3d94cae9d4b4c68bd98d67498d85aa5.jpg?imwidth=762",
+        url: "https://img01.ztat.net/article/spp-media-p1/6d4067da66aa45cd97547bd2281397ad/e3d94cae9d4b4c68bd98d67498d85aa5.jpg",
         altText: "Knitted Cropped Top Back View",
       },
     ],
@@ -884,11 +884,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/9e7ba2f5f09640998f42fbd3bc71a49d/3b2d5538a3f649d3834de4e9a2808fcc.jpg?imwidth=762",
+        url: "https://img01.ztat.net/article/spp-media-p1/9e7ba2f5f09640998f42fbd3bc71a49d/3b2d5538a3f649d3834de4e9a2808fcc.jpg",
         altText: "Boho Floral Blouse",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/7453b0caa0cd4056bccbb95e9cfdd373/480de1589c694e4a86d02de367c87d9c.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/7453b0caa0cd4056bccbb95e9cfdd373/480de1589c694e4a86d02de367c87d9c.jpg",
         altText: "Boho Floral Blouse Back View",
       },
     ],
@@ -912,11 +912,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/2dbd788932e449d8b3576e2a55bf3a56/a5ce1df3e0714791b941abfbee876f75.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/2dbd788932e449d8b3576e2a55bf3a56/a5ce1df3e0714791b941abfbee876f75.jpg",
         altText: "Casual T-Shirt",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/82ab6b6c77664128aefa5d859b768343/b0b97376c53b4770b0f9b892ede73157.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/82ab6b6c77664128aefa5d859b768343/b0b97376c53b4770b0f9b892ede73157.jpg",
         altText: "Casual T-Shirt Back View",
       },
     ],
@@ -940,11 +940,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/350faf1301dc445d9d2aa70e208f5414/442131b5ed74469789d7c95a03959651.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/350faf1301dc445d9d2aa70e208f5414/442131b5ed74469789d7c95a03959651.jpg",
         altText: "Off-Shoulder Top",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/d71dd2a0053e4c61858b69807d1ff295/ad4d41936f43420a9850e959770c4ab1.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/d71dd2a0053e4c61858b69807d1ff295/ad4d41936f43420a9850e959770c4ab1.jpg",
         altText: "Off-Shoulder Top Back View",
       },
     ],
@@ -968,11 +968,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/2a7c68d5ce4f413aa52c28a8ec12b71e/3ae1a54a29764409a6463b236ca477a6.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/2a7c68d5ce4f413aa52c28a8ec12b71e/3ae1a54a29764409a6463b236ca477a6.jpg",
         altText: "Lace-Trimmed Cami Top",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/cc6a12e194f64961b0317169650783d4/ec1f86daca0847b7ad70d1deca65219b.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/cc6a12e194f64961b0317169650783d4/ec1f86daca0847b7ad70d1deca65219b.jpg",
         altText: "Lace-Trimmed Cami Top Back View",
       },
     ],
@@ -996,11 +996,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/64d822356d5049808f7cc98d9dc6b2e5/2a413805ed984bae84b1868940d236e0.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/64d822356d5049808f7cc98d9dc6b2e5/2a413805ed984bae84b1868940d236e0.jpg",
         altText: "Graphic Print Tee",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/750372bdda4e434cb0fd71cc40194fce/58e492e04e4f4f0caedeb5a57f00acf8.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/750372bdda4e434cb0fd71cc40194fce/58e492e04e4f4f0caedeb5a57f00acf8.jpg",
         altText: "Graphic Print Tee Back View",
       },
     ],
@@ -1024,11 +1024,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/07d8161cd3c844dba35f3c3144738472/3776163fcc2941b0bd81dc3ae6392e8f.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/07d8161cd3c844dba35f3c3144738472/3776163fcc2941b0bd81dc3ae6392e8f.jpg",
         altText: "Ribbed Long-Sleeve Top",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/ca91690cba124e4eb1e1987eaf7aab52/1857b52076ed4176862c31b299989f7e.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/ca91690cba124e4eb1e1987eaf7aab52/1857b52076ed4176862c31b299989f7e.jpg",
         altText: "Ribbed Long-Sleeve Top Back View",
       },
     ],
@@ -1052,11 +1052,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/49144c73a1a44c7c961e70f335dd6309/fad6cd8a534c4b49b282f34d1b94050b.jpg?imwidth=762",
+        url: "https://img01.ztat.net/article/spp-media-p1/49144c73a1a44c7c961e70f335dd6309/fad6cd8a534c4b49b282f34d1b94050b.jpg",
         altText: "Ruffle-Sleeve Blouse",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/81f6d3891060497fb734a1e8e395df4f/f1d57e13abd14987a34b8698ae334275.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/81f6d3891060497fb734a1e8e395df4f/f1d57e13abd14987a34b8698ae334275.jpg",
         altText: "Ruffle-Sleeve Blouse Back View",
       },
     ],
@@ -1080,11 +1080,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/9d81c7d9c51e472d96dffcf46bfca6f5/46a104ff6f624d64803c373f23490442.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/9d81c7d9c51e472d96dffcf46bfca6f5/46a104ff6f624d64803c373f23490442.jpg",
         altText: "Classic Button-Up Shirt",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/e54613dd26f6441597efecd998684305/9fad2805f5b1497689989fb80330d467.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/e54613dd26f6441597efecd998684305/9fad2805f5b1497689989fb80330d467.jpg",
         altText: "Classic Button-Up Shirt Back View",
       },
     ],
@@ -1108,11 +1108,11 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/03878b8cbf984c8ebcf956aad71baa43/17fd1801afdc4b3ab21efd3e84a4b4b6.jpg?imwidth=762",
+        url: "https://img01.ztat.net/article/spp-media-p1/03878b8cbf984c8ebcf956aad71baa43/17fd1801afdc4b3ab21efd3e84a4b4b6.jpg",
         altText: "V-Neck Wrap Top",
       },
       {
-        url: "https://img01.ztat.net/article/spp-media-p1/85fb4b1882614e89a129a71bddcdef19/c6e86ee949ac49279c81f31487732feb.jpg?imwidth=1800",
+        url: "https://img01.ztat.net/article/spp-media-p1/85fb4b1882614e89a129a71bddcdef19/c6e86ee949ac49279c81f31487732feb.jpg",
         altText: "V-Neck Wrap Top Back View",
       },
     ],
