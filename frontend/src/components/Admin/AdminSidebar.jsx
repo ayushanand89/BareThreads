@@ -5,11 +5,18 @@ import {
   FaStore,
   FaUser,
 } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router";
+import { logout } from "../../redux/slices/authSlice";
+import { clearCart } from "../../redux/slices/cartSlice";
 
 const AdminSidebar = ({isSidebarOpen, toggleSideBar}) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch(); 
+
   const handleLogout = () => {
+    dispatch(logout()); 
+    dispatch(clearCart()); 
     navigate("/");
   };
 

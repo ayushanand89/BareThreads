@@ -30,7 +30,7 @@ export const updateProduct = createAsyncThunk(
   "adminProducts/updateProduct",
   async ({ id, productData }) => {
     const response = await axiosInstance.put(
-      `/admin/products/${id}`,
+      `/products/${id}`,
       productData
     );
     return response.data.data;
@@ -41,7 +41,7 @@ export const updateProduct = createAsyncThunk(
 export const deleteProduct = createAsyncThunk(
   "adminProducts/deleteProduct",
   async (id) => {
-    await axiosInstance.delete(`/admin/products/${id}`);
+    await axiosInstance.delete(`/products/${id}`);
     return id;
   }
 );
