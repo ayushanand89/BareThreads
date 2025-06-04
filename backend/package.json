@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "barethreads": "file:..",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.6.1",
     "cookie-parser": "^1.4.7",
@@ -23,6 +24,8 @@
     "mongoose": "^8.15.0",
     "multer": "^2.0.0",
     "nodemon": "^3.1.10",
+    "path": "^0.12.7",
+    "path-to-regexp": "^8.2.0",
     "streamifier": "^0.1.1"
   }
 }
