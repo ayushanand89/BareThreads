@@ -1,26 +1,34 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
-import { addUser, deleteUser, fetchUsers, updateUser } from "../../redux/slices/adminSlice";
+import { useState } from "react";
 
 const UserManagement = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const users = [
+    { _id: 1234, name: "John Doe", email: "john@example.com", role: "admin" },
+    {
+      _id: 1235,
 
-  const { user } = useSelector((state) => state.auth);
-  const { users, loading, error } = useSelector((state) => state.admin);
-
-  useEffect(() => {
-    if (user && user.role !== "admin") {
-      navigate("/");
-    }
-  }, [user, navigate]);
-
-  useEffect(() => {
-    if(user && user.role === "admin"){
-      dispatch(fetchUsers())
-    }
-  }, [dispatch, user])
+      name: "Jane Smith",
+      email: "jane@example.com",
+      role: "customer",
+    },
+    {
+      _id: 1236,
+      name: "Alice Johnson",
+      email: "alice@example.com",
+      role: "admin",
+    },
+    {
+      _id: 1237,
+      name: "Bob Williams",
+      email: "bob@example.com",
+      role: "customer",
+    },
+    {
+      _id: 1238,
+      name: "Sara Lee",
+      email: "sara@example.com",
+      role: "customer",
+    },
+  ];
 
   const [formData, setFormData] = useState({
     name: "",
@@ -38,9 +46,6 @@ const UserManagement = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    dispatch(addUser(formData));
-
     //Reset the form after submission
     setFormData({
       name: "",
@@ -51,21 +56,18 @@ const UserManagement = () => {
   };
 
   const handleRoleChange = (userId, newRole) => {
-    dispatch(updateUser({ id: userId, role: newRole }));
+    console.log({ id: userId, role: newRole });
   };
 
   const handleDeleteUser = (userId) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      dispatch(deleteUser({ id: userId }));
+    if(window.confirm("Are you sure you want to delete this user?")){
+        console.log("deleting user with ID", userId)
     }
-  };
+  }
 
   return (
     <div className="max-w-7xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-4">User Managment</h2>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-
       {/* Add New User Form */}
       <div className="p-6 rounded-lg mb-6">
         <h3 className="text-lg font-bold mb-4">Add New User</h3>
@@ -151,12 +153,7 @@ const UserManagement = () => {
                   </select>
                 </td>
                 <td className="p-4">
-                  <button
-                    onClick={() => handleDeleteUser(user._id)}
-                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                  >
-                    Delete
-                  </button>
+                    <button onClick={() => handleDeleteUser(user._id)} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Delete</button>
                 </td>
               </tr>
             ))}

@@ -53,7 +53,7 @@ const updateUser = asyncHandler(async (req, res) => {
   const updatedUser = await user.save();
   return res
     .status(200)
-    .json(new ApiResponse(200, updatedUser, "User updated successfully"));
+    .json(new ApiResponse(200, updateUser, "User updated successfully"));
 });
 
 const deleteUser = asyncHandler(async (req, res) => {

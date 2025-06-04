@@ -7,6 +7,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 // Create new checkout session
 const createCheckout = asyncHandler(async (req, res) => {
+    console.log("REQ.BODY: ", req)
   const { checkoutItems, shippingAddress, paymentMethod, totalPrice } = req.body;
 
   // Basic validations
