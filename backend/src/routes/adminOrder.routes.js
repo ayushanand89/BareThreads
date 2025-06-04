@@ -30,7 +30,7 @@ router.put(
   verifyJWT,
   isAdmin,
   asyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate("user", "name");
 
     if (!order) {
       throw new ApiError(404, "Order not found");

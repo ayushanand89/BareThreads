@@ -1,57 +1,29 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
+import {
+  deleteProduct,
+  fetchAdminProducts,
+} from "../../redux/slices/adminProductSlice";
 
 const ProductManagement = () => {
-  const products = [
-    {
-      _id: 12132,
-      name: "Shirt",
-      price: 110,
-      sku: "123484272",
-    },
-    {
-      _id: 12133,
-      name: "Jeans",
-      price: 150,
-      sku: "987654321",
-    },
-    {
-      _id: 12134,
-      name: "Hoodie",
-      price: 130,
-      sku: "654321789",
-    },
-    {
-      _id: 12135,
-      name: "Jacket",
-      price: 200,
-      sku: "321456987",
-    },
-    {
-      _id: 12136,
-      name: "Sneakers",
-      price: 180,
-      sku: "456123789",
-    },
-    {
-      _id: 12137,
-      name: "Cap",
-      price: 40,
-      sku: "789321456",
-    },
-    {
-      _id: 12138,
-      name: "Backpack",
-      price: 95,
-      sku: "147258369",
-    },
-  ];
+  const dispatch = useDispatch();
+  const { products, loading, error } = useSelector(
+    (state) => state.adminProducts
+  );
+
+  useEffect(() => {
+    dispatch(fetchAdminProducts());
+  }, [dispatch]);
 
   const handleDelete = (id) => {
-     if(window.confirm("Are you sure, you want to delete this product?")){
-        console.log("delete product with id: ", id); 
-     }
-  }
+    if (window.confirm("Are you sure, you want to delete this product?")) {
+      dispatch(deleteProduct(id));
+    }
+  };
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error} </p>;
   return (
     <div className="max-w-7xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6">Product Management</h2>
@@ -84,14 +56,19 @@ const ProductManagement = () => {
                     >
                       Edit
                     </Link>
-                    <button onClick={() => handleDelete(product._id)} className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
+                    <button
+                      onClick={() => handleDelete(product._id)}
+                      className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
                 <td colSpan={4} className="p-4 text-center text-gray-500">
-                    No Products Found.
+                  No Products Found.
                 </td>
               </tr>
             )}

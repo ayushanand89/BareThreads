@@ -1,75 +1,23 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { fetchUserOrders } from "../redux/slices/orderSlice";
 
 const MyOrdersPage = () => {
-  const [orders, setOrders] = useState([]);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { orders, loading, error } = useSelector((state) => state.orders);
 
   useEffect(() => {
-    // Simulate fetching orders from an API
-    setTimeout(() => {
-      const mockOrders = [
-        {
-          _id: 12345,
-          createdAt: new Date(),
-          shippingAddress: { city: "New York", country: "USA" },
-          orderItems: [
-            {
-              name: "Product 1",
-              image: "https://picsum.photos/500/500?random=1",
-            },
-          ],
-          totalPrice: 200,
-          isPaid: true,
-        },
-        {
-          _id: 12346,
-          createdAt: new Date(),
-          shippingAddress: { city: "Los Angeles", country: "USA" },
-          orderItems: [
-            {
-              name: "Product 2",
-              image: "https://picsum.photos/500/500?random=2",
-            },
-          ],
-          totalPrice: 300,
-          isPaid: false,
-        },
-        {
-          _id: 12347,
-          createdAt: new Date(),
-          shippingAddress: { city: "Chicago", country: "USA" },
-          orderItems: [
-            {
-              name: "Product 3",
-              image: "https://picsum.photos/500/500?random=3",
-            },
-          ],
-          totalPrice: 150,
-          isPaid: true,
-        },
-        {
-          _id: 12348,
-          createdAt: new Date(),
-          shippingAddress: { city: "Houston", country: "USA" },
-          orderItems: [
-            {
-              name: "Product 4",
-              image: "https://picsum.photos/500/500?random=4",
-            },
-          ],
-          totalPrice: 250,
-          isPaid: false,
-        },
-      ];
-
-      setOrders(mockOrders);
-    }, 1000);
-  }, []);
+    dispatch(fetchUserOrders());
+  }, [dispatch]);
 
   const handleRowClick = (orderId) => {
-    navigate(`/order/${orderId}`)
-  }
+    navigate(`/order/${orderId}`);
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">
@@ -95,7 +43,7 @@ const MyOrdersPage = () => {
                   onClick={() => handleRowClick(order._id)}
                   className="border-b hover:border-gray-50 cursor-pointer"
                 >
-                    {/* Image */}
+                  {/* Image */}
                   <td className="py-2 px-2 sm:py-4 sm:px-4">
                     <img
                       src={order.orderItems[0].image}
@@ -104,41 +52,46 @@ const MyOrdersPage = () => {
                     />
                   </td>
 
-                    {/* Order ID */}
+                  {/* Order ID */}
                   <td className="py-2 px-2 sm:py-4 font-medium text-gray-900 whitespace-nowrap">
                     #{order._id}
                   </td>
 
-                    {/* Created At */}
-                    <td className="py-2 px-2 sm:py-4 sm:px-4">
-                        {new Date(order.createdAt).toLocaleDateString()} {" "}
-                        {new Date(order.createdAt).toLocaleTimeString()}
-                    </td>
+                  {/* Created At */}
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">
+                    {new Date(order.createdAt).toLocaleDateString()}{" "}
+                    {new Date(order.createdAt).toLocaleTimeString()}
+                  </td>
 
-                    {/* Shipping Address */}
-                    <td className="py-2 px-2 sm:py-4 sm:px-4">
-                        {order.shippingAddress ? `${order.shippingAddress.city}, ${order.shippingAddress.country}` : "N/A"}
-                    </td>
+                  {/* Shipping Address */}
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">
+                    {order.shippingAddress
+                      ? `${order.shippingAddress.city}, ${order.shippingAddress.country}`
+                      : "N/A"}
+                  </td>
 
-                    {/* Items */}
-                    <td className="py-2 px-2 sm:py-4 sm:px-4">
-                        {order.orderItems.length} 
-                    </td>
+                  {/* Items */}
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">
+                    {order.orderItems.length}
+                  </td>
 
-                    {/* Price */}
-                    <td className="py-2 px-2 sm:py-4 sm:px-4">
-                        ${order.totalPrice.toFixed(2)}
-                    </td>
+                  {/* Price */}
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">
+                    ${order.totalPrice.toFixed(2)}
+                  </td>
 
-                    {/* Status */}
-                    <td className="py-2 px-2 sm:py-4 sm:px-4">
-                       <span className={`${
+                  {/* Status */}
+                  <td className="py-2 px-2 sm:py-4 sm:px-4">
+                    <span
+                      className={`${
                         order.isPaid
                           ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"} px-2 py-1 rounded-full text-xs sm:text-sm `}>
-                        {order.isPaid ? "Paid" : "Pending"}
-                       </span>
-                    </td>
+                          : "bg-red-100 text-red-800"
+                      } px-2 py-1 rounded-full text-xs sm:text-sm `}
+                    >
+                      {order.isPaid ? "Paid" : "Pending"}
+                    </span>
+                  </td>
                 </tr>
               ))
             ) : (
