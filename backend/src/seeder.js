@@ -34,7 +34,7 @@ const seedData = async () => {
     console.log(`Using user ID: ${userID}`);
 
     const sampleProducts = products.map((product) => ({
-      ...product, 
+      ...product,
       user: userID,
     }));
 
