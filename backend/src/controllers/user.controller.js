@@ -37,6 +37,8 @@ const registerUser = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
+    sameSite: "None", // Use 'None' for cross-site cookies
+    maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
   };
 
   res
@@ -84,7 +86,8 @@ const loginUser = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
-    expires: new Date(Date.now() + 8 * 60 * 60 * 1000), // 8 hours
+    sameSite: "None", // Use 'None' for cross-site cookies
+    maxAge: 8 * 60 * 60 * 1000, // 8 hours in milliseconds
   };
 
   res
