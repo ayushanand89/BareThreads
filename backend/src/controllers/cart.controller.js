@@ -26,6 +26,12 @@ const addToCart = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Product not found");
   }
 
+  // Use the discounted price when one is set, otherwise the regular price
+  const effectivePrice =
+    product.discountPrice && product.discountPrice > 0
+      ? product.discountPrice
+      : product.price;
+
   //Determine if the user is logged in or a guest
   let cart = await getCart(userId, guestId);
 
@@ -40,14 +46,29 @@ const addToCart = asyncHandler(async (req, res) => {
 
     if (productIndex > -1) {
       // If the product already exists, update the quantity
-      cart.products[productIndex].quantity += quantity;
+      const newQuantity = cart.products[productIndex].quantity + quantity;
+      if (newQuantity > product.countInStock) {
+        throw new ApiError(
+          400,
+          `Only ${product.countInStock} in stock for this item`
+        );
+      }
+      cart.products[productIndex].quantity = newQuantity;
+      // Keep the stored price in sync with the current effective price
+      cart.products[productIndex].price = effectivePrice;
     } else {
+      if (quantity > product.countInStock) {
+        throw new ApiError(
+          400,
+          `Only ${product.countInStock} in stock for this item`
+        );
+      }
       // add new product
       cart.products.push({
         productId,
         name: product.name,
         image: product.images[0].url,
-        price: product.price,
+        price: effectivePrice,
         size,
         color,
         quantity,
@@ -64,6 +85,12 @@ const addToCart = asyncHandler(async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, cart, "Cart Updated Successfully"));
   } else {
+    if (quantity > product.countInStock) {
+      throw new ApiError(
+        400,
+        `Only ${product.countInStock} in stock for this item`
+      );
+    }
     // create a new cart for the guest or user
     const newCart = await Cart.create({
       user: userId ? userId : undefined,
@@ -73,13 +100,13 @@ const addToCart = asyncHandler(async (req, res) => {
           productId,
           name: product.name,
           image: product.images[0].url,
-          price: product.price,
+          price: effectivePrice,
           size,
           color,
           quantity,
         },
       ],
-      totalPrice: product.price * quantity,
+      totalPrice: effectivePrice * quantity,
     });
     return res
       .status(200)

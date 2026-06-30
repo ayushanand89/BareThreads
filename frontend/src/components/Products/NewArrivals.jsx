@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router";
 import { axiosInstance } from "../../utils/axios";
+import { hiRes } from "../../utils/imageUrl";
+import StarRating from "../Common/StarRating";
+import { Reveal } from "../Common/Reveal";
 
 const NewArrivals = () => {
   const scrollRef = useRef(null);
@@ -19,7 +22,7 @@ const NewArrivals = () => {
         const response = await axiosInstance.get(`/products/new-arrivals`);
         setNewArrivals(response.data.data);
       } catch (error) {
-        console.log(error);
+        console.error("Failed to load new arrivals:", error);
       }
     };
     fetchNewArrivals();
@@ -71,36 +74,44 @@ const NewArrivals = () => {
   }, [newArrivals]);
 
   return (
-    <section className="py-16 px-4 lg:px-0">
-      <div className="container mx-auto text-center mb-10 relative">
-        <h2 className="text-3xl font-bold mb-4">Explore New Arrivals</h2>
-        <p className="text-lg text-gray-600 mb-8">
-          Discover the latest styles straight off the runway, freshly added to
-          keep your wardrobe upto to the trends.
-        </p>
+    <section className="py-20 px-4 lg:px-6">
+      <div className="container mx-auto text-center mb-12 relative">
+        <Reveal>
+          <p className="eyebrow mb-2">Fresh Off The Runway</p>
+          <h2 className="font-display text-3xl md:text-5xl font-semibold text-ink mb-4">
+            Explore New Arrivals
+          </h2>
+          <p className="text-stone max-w-xl mx-auto">
+            Discover the latest styles, freshly added to keep your wardrobe
+            ahead of the trends.
+          </p>
+        </Reveal>
 
         {/* Scroll Buttons */}
         <div className="absolute right-0 bottom-[-30px] flex space-x-2">
           <button
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
-            className={`p-2 rounded border ${
+            aria-label="Scroll left"
+            className={`p-2.5 rounded-full border transition-colors ${
               canScrollLeft
-                ? "bg-white text-black"
-                : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                ? "bg-white text-ink border-ink/20 hover:bg-ink hover:text-cream"
+                : "bg-sand text-stone/50 border-transparent cursor-not-allowed"
             }`}
           >
-            <FiChevronLeft className="text-2xl" />
+            <FiChevronLeft className="text-xl" />
           </button>
           <button
             onClick={() => scroll("right")}
-            className={`p-2 rounded border ${
+            disabled={!canScrollRight}
+            aria-label="Scroll right"
+            className={`p-2.5 rounded-full border transition-colors ${
               canScrollRight
-                ? "bg-white text-black"
-                : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                ? "bg-white text-ink border-ink/20 hover:bg-ink hover:text-cream"
+                : "bg-sand text-stone/50 border-transparent cursor-not-allowed"
             }`}
           >
-            <FiChevronRight className="text-2xl" />
+            <FiChevronRight className="text-xl" />
           </button>
         </div>
       </div>
@@ -117,23 +128,34 @@ const NewArrivals = () => {
         }`}
       >
         {Array.isArray(newArrivals) && newArrivals?.map((product) => (
-          <div
+          <Link
+            to={`/product/${product._id}`}
             key={product._id}
-            className="min-w-[100%] sm:min-w-[50%] lg:min-w-[30%] relative"
+            className="group min-w-[100%] sm:min-w-[50%] lg:min-w-[32%] relative overflow-hidden rounded-2xl clip-2xl
+              transition-all duration-500 ease-out hover:shadow-[var(--shadow-lift)]"
+            onClick={(e) => {
+              if (isDragging) e.preventDefault();
+            }}
           >
             <img
-              src={product.images[0]?.url}
+              src={hiRes(product.images[0]?.url, 900)}
               alt={product.images[0]?.altText || product.name}
-              className="w-full h-[500px] object-cover rounded-lg"
+              className="w-full h-[500px] object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-110"
               draggable="false"
             />
-            <div className="absolute bottom-0 left-0 right-0 bg-black/15 backdrop-blur-md text-white p-4 rounded-b-lg">
-              <Link to={`/product/${product._id}`} className="block">
-                <h4 className="font-medium">{product.name}</h4>
-                <p className="mt-1">${product.price}</p>
-              </Link>
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute bottom-0 left-0 right-0 p-5 text-cream translate-y-1 group-hover:translate-y-0 transition-transform duration-500">
+              <h4 className="font-heading font-semibold text-lg">
+                {product.name}
+              </h4>
+              {product.numReviews > 0 && (
+                <div className="mt-1">
+                  <StarRating value={product.rating} size="sm" />
+                </div>
+              )}
+              <p className="mt-1 text-cream/80">${product.price}</p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

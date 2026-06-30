@@ -29,12 +29,12 @@ const checkoutSlice = createSlice({
         state.error = null;
       })
       .addCase(createCheckout.fulfilled, (state, action) => {
-        state.loading = true;
+        state.loading = false;
         state.checkout = action.payload;
       })
       .addCase(createCheckout.rejected, (state, action) => {
-        state.loading = true;
-        state.error = action.payload.message;
+        state.loading = false;
+        state.error = action.payload?.message || "Checkout failed";
       });
   },
 });

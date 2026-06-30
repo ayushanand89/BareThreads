@@ -29,6 +29,12 @@ const getOrderDetails = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Order Not Found");
   }
 
+  // Only the owner of the order (or an admin) may view it
+  const orderOwnerId = order.user?._id ? order.user._id.toString() : order.user?.toString();
+  if (orderOwnerId !== req.user._id.toString() && req.user.role !== "admin") {
+    throw new ApiError(403, "Not authorized to view this order");
+  }
+
   return res
     .status(200)
     .json(new ApiResponse(200, order, "Order fetched Successfully"));

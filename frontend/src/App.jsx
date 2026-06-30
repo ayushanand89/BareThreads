@@ -21,31 +21,68 @@ import OrderManagement from "./components/Admin/OrderManagement";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import ProtectedRoute from "./components/Common/ProtectedRoute";
+import ErrorBoundary from "./components/Common/ErrorBoundary";
+import ScrollToTop from "./components/Common/ScrollToTop";
 
 const App = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Toaster position="top-right" />
-        <Routes>
-          <Route path="/" element={<UserLayout />}>
-            <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="profile" element={<Profile />} />
-            <Route
-              path="collections/:collection"
-              element={<CollectionPage />}
-            />
-            <Route path="product/:id" element={<ProductDetails />} />
-            <Route path="checkout" element={<Checkout />} />
-            <Route
-              path="order-confirmation"
-              element={<OrderConfirmationPage />}
-            />
-            <Route path="order/:id" element={<OrderDetailsPage />} />
-            <Route path="my-orders" element={<MyOrdersPage />} />
-          </Route>
+        <ScrollToTop />
+        <Toaster position="top-right" richColors />
+        <ErrorBoundary>
+          <Routes>
+            <Route path="/" element={<UserLayout />}>
+              <Route index element={<Home />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route
+                path="collections/:collection"
+                element={<CollectionPage />}
+              />
+              <Route path="product/:id" element={<ProductDetails />} />
+              {/* Authenticated customer routes */}
+              <Route
+                path="profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="checkout"
+                element={
+                  <ProtectedRoute>
+                    <Checkout />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="order-confirmation"
+                element={
+                  <ProtectedRoute>
+                    <OrderConfirmationPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="order/:id"
+                element={
+                  <ProtectedRoute>
+                    <OrderDetailsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="my-orders"
+                element={
+                  <ProtectedRoute>
+                    <MyOrdersPage />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
           <Route
             path="/admin"
             element={
@@ -54,13 +91,14 @@ const App = () => {
               </ProtectedRoute>
             }
           >
-            <Route index element={<AdminHomePage />} />
-            <Route path="users" element={<UserManagement />} />
-            <Route path="products" element={<ProductManagement />} />
-            <Route path="products/:id/edit" element={<EditProductPage />} />
-            <Route path="orders" element={<OrderManagement />} />
-          </Route>
-        </Routes>
+              <Route index element={<AdminHomePage />} />
+              <Route path="users" element={<UserManagement />} />
+              <Route path="products" element={<ProductManagement />} />
+              <Route path="products/:id/edit" element={<EditProductPage />} />
+              <Route path="orders" element={<OrderManagement />} />
+            </Route>
+          </Routes>
+        </ErrorBoundary>
       </BrowserRouter>
     </Provider>
   );

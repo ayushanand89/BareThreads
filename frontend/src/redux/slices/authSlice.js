@@ -33,7 +33,7 @@ export const loginUser = createAsyncThunk(
 
       return response.data.data.user; // Return the user object fromt the response
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -52,7 +52,7 @@ export const registerUser = createAsyncThunk(
 
       return response.data.data.user; // Return the user object fromt the response
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -86,7 +86,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.message;
+        state.error = action.payload?.message || "Login failed. Please try again.";
       })
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
@@ -98,7 +98,8 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.message;
+        state.error =
+          action.payload?.message || "Registration failed. Please try again.";
       });
   },
 });

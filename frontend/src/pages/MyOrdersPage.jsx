@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { fetchUserOrders } from "../redux/slices/orderSlice";
+import { Reveal } from "../components/Common/Reveal";
 
 const MyOrdersPage = () => {
   const navigate = useNavigate();
@@ -16,15 +17,24 @@ const MyOrdersPage = () => {
     navigate(`/order/${orderId}`);
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <p className="text-center py-20 text-stone">Loading...</p>;
+  if (error)
+    return <p className="text-center py-20 text-danger">Error: {error}</p>;
 
   return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-6">
-      <h2 className="text-xl sm:text-2xl font-bold mb-6">My Orders</h2>
-      <div className="relative shadow-md sm:rounded-lg overflow-hidden">
-        <table className="min-w-full text-left text-gray-500">
-          <thead className="bg-gray-100 text-xs uppercase text-gray-700">
+    <div className="max-w-7xl mx-auto px-4 lg:px-8 py-8 lg:py-12">
+      <Reveal>
+        <p className="eyebrow mb-1.5">Your Account</p>
+        <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink mb-8">
+          My Orders
+        </h2>
+      </Reveal>
+      <Reveal
+        delay={0.1}
+        className="relative bg-white border border-ink/10 rounded-xl shadow-[var(--shadow-card)] overflow-x-auto hide-scrollbar"
+      >
+        <table className="min-w-full text-left text-stone">
+          <thead className="bg-sand/70 text-[11px] uppercase tracking-wider text-charcoal">
             <tr>
               <th className="py-2 px-4 sm:py-3">Image</th>
               <th className="py-2 px-4 sm:py-3">Order ID</th>
@@ -41,7 +51,7 @@ const MyOrdersPage = () => {
                 <tr
                   key={order._id}
                   onClick={() => handleRowClick(order._id)}
-                  className="border-b hover:border-gray-50 cursor-pointer"
+                  className="border-b border-ink/5 hover:bg-cream cursor-pointer transition-colors"
                 >
                   {/* Image */}
                   <td className="py-2 px-2 sm:py-4 sm:px-4">
@@ -53,7 +63,7 @@ const MyOrdersPage = () => {
                   </td>
 
                   {/* Order ID */}
-                  <td className="py-2 px-2 sm:py-4 font-medium text-gray-900 whitespace-nowrap">
+                  <td className="py-2 px-2 sm:py-4 font-medium text-ink whitespace-nowrap">
                     #{order._id}
                   </td>
 
@@ -85,9 +95,9 @@ const MyOrdersPage = () => {
                     <span
                       className={`${
                         order.isPaid
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      } px-2 py-1 rounded-full text-xs sm:text-sm `}
+                          ? "bg-success/10 text-success"
+                          : "bg-danger/10 text-danger"
+                      } px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap`}
                     >
                       {order.isPaid ? "Paid" : "Pending"}
                     </span>
@@ -103,7 +113,7 @@ const MyOrdersPage = () => {
             )}
           </tbody>
         </table>
-      </div>
+      </Reveal>
     </div>
   );
 };

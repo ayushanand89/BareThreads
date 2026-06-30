@@ -65,9 +65,37 @@ const updateProduct = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Product doesn't exist");
   }
 
-  // Update only fields provided in the request body
-  Object.keys(req.body).forEach((key) => {
-    product[key] = req.body[key];
+  // Whitelist of fields an admin is allowed to update — prevents a client
+  // from overwriting protected fields such as `user`, `rating`, or `_id`.
+  const allowedFields = [
+    "name",
+    "description",
+    "price",
+    "discountPrice",
+    "countInStock",
+    "sku",
+    "category",
+    "brand",
+    "sizes",
+    "colors",
+    "collections",
+    "material",
+    "gender",
+    "images",
+    "isFeatured",
+    "isPublished",
+    "tags",
+    "metaTitle",
+    "metaDescription",
+    "metaKeywords",
+    "dimensions",
+    "weight",
+  ];
+
+  allowedFields.forEach((key) => {
+    if (req.body[key] !== undefined) {
+      product[key] = req.body[key];
+    }
   });
 
   const updatedProduct = await product.save();
@@ -137,10 +165,13 @@ const getAllProducts = asyncHandler(async (req, res) => {
     if (maxPrice) query.price.$lte = Number(maxPrice);
   }
 
-  if (search) {
+  if (search && typeof search === "string") {
+    // Escape regex metacharacters so user input can't break the query or
+    // trigger ReDoS / NoSQL operator injection.
+    const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     query.$or = [
-      { name: { $regex: search, $options: "i" } },
-      { description: { $regex: search, $options: "i" } },
+      { name: { $regex: escaped, $options: "i" } },
+      { description: { $regex: escaped, $options: "i" } },
     ];
   }
 

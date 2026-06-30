@@ -4,31 +4,52 @@ import { RiTwitterXLine } from "react-icons/ri";
 
 const Topbar = () => {
   return (
-    <div className="bg-[#ea2e0e] text-white">
-      <div className="container mx-auto flex items-center justify-between py-3 px-4">
-
+    <div className="bg-ink text-cream">
+      <div className="container mx-auto flex items-center justify-between py-2.5 px-4 lg:px-6">
         <div className="hidden md:flex items-center space-x-4">
-          <a href="#" className="hover:text-gray-300">
-            <TbBrandMeta className="h-5 w-5" />
+          <a
+            href="https://www.instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="text-cream/70 hover:text-cream transition-colors"
+          >
+            <IoLogoInstagram className="h-4.5 w-4.5" />
           </a>
-          <a href="#" className="hover:text-gray-300">
-            <IoLogoInstagram className="h-5 w-5" />
+          <a
+            href="https://www.facebook.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Meta"
+            className="text-cream/70 hover:text-cream transition-colors"
+          >
+            <TbBrandMeta className="h-4.5 w-4.5" />
           </a>
-          <a href="#" className="hover:text-gray-300">
+          <a
+            href="https://www.x.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="X"
+            className="text-cream/70 hover:text-cream transition-colors"
+          >
             <RiTwitterXLine className="h-4 w-4" />
           </a>
         </div>
 
-        <div className="text-sm text-center flex-grow">
-          <span>We ship worldwide - Fast and reliable shipping!</span>
+        <div className="text-xs md:text-sm text-center flex-grow tracking-wide">
+          <span className="text-cream/90">
+            Complimentary worldwide shipping on all orders
+          </span>
         </div>
 
         <div className="text-sm hidden md:block">
-          <a href="tel:+1234567890" className="hover:text-gray-300">
+          <a
+            href="tel:+1234567890"
+            className="text-cream/70 hover:text-cream transition-colors"
+          >
             +1 (123) 567-890
           </a>
         </div>
-
       </div>
     </div>
   );

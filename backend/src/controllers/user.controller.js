@@ -4,7 +4,6 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import "dotenv/config";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { generateToken } from "../utils/generateToken.js";
-import e from "express";
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -87,7 +86,7 @@ const loginUser = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "None", // Use 'None' for cross-site cookies
-    maxAge: 8 * 60 * 60 * 1000, // 8 hours in milliseconds
+    maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds (matches token expiry)
   };
 
   res

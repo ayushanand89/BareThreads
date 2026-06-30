@@ -1,9 +1,4 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  createActionCreatorInvariantMiddleware,
-  buildCreateSlice,
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../utils/axios";
 
 // async thunk to fetch admin products

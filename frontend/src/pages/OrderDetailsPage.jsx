@@ -1,11 +1,27 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router";
+import { HiOutlineArrowLeft } from "react-icons/hi2";
 import { fetchOrderDetails } from "../redux/slices/orderSlice";
+import { hiRes } from "../utils/imageUrl";
+import { Reveal } from "../components/Common/Reveal";
+
+const Badge = ({ ok, okText, noText, neutral }) => (
+  <span
+    className={`px-3 py-1 rounded-full text-xs font-medium ${
+      ok
+        ? "bg-success/10 text-success"
+        : neutral
+        ? "bg-amber-100 text-amber-700"
+        : "bg-danger/10 text-danger"
+    }`}
+  >
+    {ok ? okText : noText}
+  </span>
+);
 
 const OrderDetailsPage = () => {
   const { id } = useParams();
-
   const dispatch = useDispatch();
   const { orderDetails, loading, error } = useSelector((state) => state.orders);
 
@@ -13,103 +29,114 @@ const OrderDetailsPage = () => {
     dispatch(fetchOrderDetails(id));
   }, [dispatch, id]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error} </p>;
+  if (loading)
+    return <p className="text-center py-20 text-stone">Loading...</p>;
+  if (error)
+    return <p className="text-center py-20 text-danger">Error: {error}</p>;
+
   return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-6">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6">Order Details</h2>
+    <div className="max-w-5xl mx-auto px-4 lg:px-8 py-8 lg:py-12">
+      <Link
+        to="/my-orders"
+        className="inline-flex items-center gap-2 text-sm text-stone hover:text-ink transition-colors mb-6"
+      >
+        <HiOutlineArrowLeft className="h-4 w-4" /> Back to My Orders
+      </Link>
+
+      <Reveal>
+        <p className="eyebrow mb-1.5">Order Details</p>
+        <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink mb-8">
+          Your Order
+        </h2>
+      </Reveal>
+
       {!orderDetails ? (
-        <p>No Order details found</p>
+        <p className="text-stone">No order details found</p>
       ) : (
-        <div className="p-4 sm:p-6 rounded-lg border">
-          {/* Order Info */}
-          <div className="flex flex-col sm:flex-row justify-between mb-8">
+        <div className="bg-white rounded-2xl border border-ink/10 shadow-[var(--shadow-card)] overflow-hidden">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row justify-between gap-4 p-6 bg-sand/50 border-b border-ink/10">
             <div>
-              <h3>Order ID: #{orderDetails._id}</h3>
-              <p className="text-gray-600">
+              <p className="text-xs uppercase tracking-wider text-stone mb-1">
+                Order ID
+              </p>
+              <h3 className="font-medium text-ink break-all">
+                #{orderDetails._id}
+              </h3>
+              <p className="text-stone text-sm mt-1">
                 {new Date(orderDetails.createdAt).toLocaleDateString()}
               </p>
             </div>
-            <div className="flex flex-col items-start sm:items-end mt-4 sm:mt-0">
-              <span
-                className={`${
-                  orderDetails.isPaid
-                    ? "bg-green-100 text-green-700"
-                    : "bg-red-100 text-red-700"
-                } px-3 py-1 rounded-full text-sm font-medium mb-2`}
-              >
-                {orderDetails.isPaid ? "Approved" : "Pending"}
-              </span>
-              <span
-                className={`${
-                  orderDetails.isDelivered
-                    ? "bg-green-100 text-green-700"
-                    : "bg-yellow-100 text-yellow-700"
-                } px-3 py-1 rounded-full text-sm font-medium mb-2`}
-              >
-                {orderDetails.isDelivered ? "Delivered" : "Pending Delivery"}
-              </span>
+            <div className="flex flex-wrap items-start gap-2">
+              <Badge
+                ok={orderDetails.isPaid}
+                okText="Paid"
+                noText="Pending Payment"
+              />
+              <Badge
+                ok={orderDetails.isDelivered}
+                okText="Delivered"
+                noText="In Transit"
+                neutral={!orderDetails.isDelivered}
+              />
             </div>
           </div>
 
-          {/* Customer, Payment, Shipping Info */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-3">
+          {/* Payment / Shipping */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-6 border-b border-ink/10">
             <div>
-              <h4 className="text-lg font-semibold mb-2">Payment Info</h4>
-              <p>Payment Method: {orderDetails.paymentMethod}</p>
-              <p>Status: {orderDetails.isPaid ? "Paid" : "Unpaid"}</p>
+              <h4 className="text-xs uppercase tracking-wider text-stone mb-2">
+                Payment
+              </h4>
+              <p className="text-ink text-sm">{orderDetails.paymentMethod}</p>
+              <p className="text-sm mt-0.5">
+                <span className="text-stone">Status: </span>
+                <span className={orderDetails.isPaid ? "text-success" : "text-danger"}>
+                  {orderDetails.isPaid ? "Paid" : "Unpaid"}
+                </span>
+              </p>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-2">Shipping Info</h4>
-              <p>Shipping Method: {orderDetails.shippingMethod}</p>
-              <p>
-                Address: {orderDetails.shippingAddress.city},{" "}
+              <h4 className="text-xs uppercase tracking-wider text-stone mb-2">
+                Shipping
+              </h4>
+              <p className="text-ink text-sm">{orderDetails.shippingMethod}</p>
+              <p className="text-stone text-sm mt-0.5">
+                {orderDetails.shippingAddress.city},{" "}
                 {orderDetails.shippingAddress.country}
               </p>
             </div>
           </div>
 
-          {/* Product List */}
-          <div className="overflow-x-auto">
-            <h4 className="text-lg font-semibold mb-4">Products</h4>
-            <table className="min-w-full text-gray-600 mb-4">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="py-2 px-4">Name</th>
-                  <th className="py-2 px-4">Unit Price</th>
-                  <th className="py-2 px-4">Quantity</th>
-                  <th className="py-2 px-4">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orderDetails.orderItems.map((item) => (
-                  <tr key={item.productId} className="border-b">
-                    <td className="py-2 px4 flex items-center">
-                      <img
-                        src={item.image}
-                        alt={item.image}
-                        className="w-12 h-12 object-cover rounded-lg mr-4"
-                      />
-                      <Link
-                        to={`/product/${item.productId}`}
-                        className="text-blue-500 hover:underline"
-                      >
-                        {item.name}
-                      </Link>
-                    </td>
-                    <td className="py-2 px-4">${item.price}</td>
-                    <td className="py-2 px-4">{item.quantity}</td>
-                    <td className="py-2 px-4">${item.price * item.quantity}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* Items */}
+          <div className="p-6 divide-y divide-ink/5">
+            {orderDetails.orderItems.map((item) => (
+              <div
+                key={item.productId}
+                className="flex items-center gap-4 py-4 first:pt-0"
+              >
+                <img
+                  src={hiRes(item.image, 200)}
+                  alt={item.name}
+                  className="w-14 h-16 object-cover rounded-lg bg-sand"
+                />
+                <Link
+                  to={`/product/${item.productId}`}
+                  className="flex-1 min-w-0 font-medium text-ink text-sm hover:text-accent transition-colors line-clamp-2"
+                >
+                  {item.name}
+                </Link>
+                <div className="text-right shrink-0">
+                  <p className="text-sm text-ink">
+                    ${(item.price * item.quantity).toLocaleString()}
+                  </p>
+                  <p className="text-xs text-stone">
+                    ${item.price} × {item.quantity}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
-
-          {/* Back to Orders Link */}
-          <Link to="/my-orders" className="text-blue-500 hover:underline">
-            Back to My Orders
-          </Link>
         </div>
       )}
     </div>

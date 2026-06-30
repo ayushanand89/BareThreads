@@ -1,82 +1,115 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { IoMdClose } from "react-icons/io";
+import { HiOutlineShoppingBag } from "react-icons/hi2";
 import CartContent from "../Cart/CartContent";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 
 const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
-  const drawerRef = useRef(null);
   const navigate = useNavigate();
   const { user, guestId } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.cart);
   const userId = user ? user._id : null;
+  const itemCount =
+    cart?.products?.reduce((total, p) => total + p.quantity, 0) || 0;
 
-  // Close on outside click
+  // Lock body scroll while the drawer is open
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        drawerOpen &&
-        drawerRef.current &&
-        !drawerRef.current.contains(event.target)
-      ) {
-        toggleCartDrawer(); // Only close the drawer
-      }
+    document.body.style.overflow = drawerOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
     };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [drawerOpen, toggleCartDrawer]);
+  }, [drawerOpen]);
 
   const handleCheckout = () => {
     toggleCartDrawer(); // Close drawer before navigating
     if (!user) {
-      navigate("/login?redirect=checkout"); // Redirect to login if not authenticated
+      navigate("/login?redirect=checkout");
     } else {
-      navigate("/checkout"); // Go to checkout if authenticated
+      navigate("/checkout");
     }
   };
 
-  return (
-    <div
-      ref={drawerRef}
-      className={`fixed top-0 right-0 w-3/4 sm:w-1/2 md:w-[28rem] h-full bg-white shadow-2xl transform transition-transform duration-300 flex flex-col z-50 ${
-        drawerOpen ? "translate-x-0" : "translate-x-full"
-      }`}
-    >
-      {/* Close Button */}
-      <div className="flex justify-end p-4">
-        <button onClick={toggleCartDrawer}>
-          <IoMdClose className="h-6 w-6 text-gray-600" />
-        </button>
-      </div>
+  return createPortal(
+    <>
+      {/* Backdrop */}
+      <div
+        onClick={toggleCartDrawer}
+        className={`fixed inset-0 bg-ink/40 backdrop-blur-sm z-40 transition-opacity duration-300 ${
+          drawerOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      />
 
-      {/* Cart contents with scrollable area */}
-      <div className="flex-grow p-4 overflow-y-auto">
-        <h2 className="text-xl font-semibold mb-4">Your Cart</h2>
-        {cart && cart?.products?.length > 0 ? (
-          <CartContent cart={cart} userId={userId} guestId={guestId} />
-        ) : (
-          <p>Your Cart is Empty.</p>
-        )}
-      </div>
+      <div
+        className={`fixed top-0 right-0 w-[88%] max-w-md h-full bg-white shadow-2xl transform transition-transform duration-300 ease-out flex flex-col z-50 ${
+          drawerOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        {/* Header */}
+        <div className="flex justify-between items-center p-5 border-b border-ink/10">
+          <h2 className="font-heading text-lg font-semibold text-ink flex items-center gap-2">
+            Your Cart
+            {itemCount > 0 && (
+              <span className="text-xs font-semibold bg-ink text-cream rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center">
+                {itemCount}
+              </span>
+            )}
+          </h2>
+          <button
+            onClick={toggleCartDrawer}
+            aria-label="Close cart"
+            className="transition-transform hover:rotate-90 duration-300"
+          >
+            <IoMdClose className="h-6 w-6 text-charcoal hover:text-ink transition-colors" />
+          </button>
+        </div>
 
-      {/* Checkout Button fixed at the bottom */}
-      <div className="p-4 bg-white sticky bottom-0">
+        {/* Cart contents with scrollable area */}
+        <div className="flex-grow p-5 overflow-y-auto">
+          {cart && cart?.products?.length > 0 ? (
+            <CartContent cart={cart} userId={userId} guestId={guestId} />
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full text-center px-6">
+              <div className="w-20 h-20 rounded-full bg-sand flex items-center justify-center mb-5">
+                <HiOutlineShoppingBag className="h-9 w-9 text-stone" />
+              </div>
+              <p className="font-heading text-lg text-ink mb-1">
+                Your cart is empty
+              </p>
+              <p className="text-stone text-sm mb-6">
+                Add something you love to get started.
+              </p>
+              <button
+                onClick={toggleCartDrawer}
+                className="btn-outline py-2.5 px-6 text-sm"
+              >
+                Continue Shopping
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Checkout Button fixed at the bottom */}
         {cart && cart?.products?.length > 0 && (
-          <>
-            <button
-              onClick={handleCheckout}
-              className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition"
-            >
+          <div className="p-5 bg-white border-t border-ink/10">
+            <div className="flex justify-between items-center mb-3">
+              <span className="text-stone text-sm">Subtotal</span>
+              <span className="font-heading font-semibold text-ink">
+                ${cart.totalPrice?.toLocaleString()}
+              </span>
+            </div>
+            <button onClick={handleCheckout} className="btn-primary w-full">
               Checkout
             </button>
-            <p className="text-sm tracking-tighter text-gray-500 mt-2">
-              Shipping, taxes and discount codes calculated at Checkout.
+            <p className="text-xs tracking-wide text-stone mt-2 text-center">
+              Shipping &amp; taxes calculated at checkout.
             </p>
-          </>
+          </div>
         )}
       </div>
-    </div>
+    </>,
+    document.body
   );
 };
 

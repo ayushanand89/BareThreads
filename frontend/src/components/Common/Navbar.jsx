@@ -2,19 +2,31 @@ import {
   HiOutlineUser,
   HiOutlineShoppingBag,
   HiBars3BottomRight,
+  HiOutlineArrowLeft,
 } from "react-icons/hi2";
-import { Link, useSearchParams } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import SearchBar from "./SearchBar";
 import CartDrawer from "../Layout/CartDrawer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { IoMdClose } from "react-icons/io";
 import { useSelector } from "react-redux";
 
-const Navbar = () => {
+const navLinks = [
+  { label: "Men", to: "/collections/all?gender=Men" },
+  { label: "Women", to: "/collections/all?gender=Women" },
+  { label: "Top Wear", to: "/collections/all?category=Top Wear" },
+  { label: "Bottom Wear", to: "/collections/all?category=Bottom Wear" },
+];
+
+const Navbar = ({ scrolled }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
   const { cart } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === "/";
 
   const cartItemCount =
     cart?.products?.reduce((total, product) => total + product.quantity, 0) ||
@@ -28,65 +40,81 @@ const Navbar = () => {
     setDrawerOpen(!drawerOpen);
   };
 
+  // Lock body scroll while the mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = navDrawerOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [navDrawerOpen]);
+
   return (
     <>
-      <nav className="container mx-auto flex items-center justify-between py-4 px-6">
-        {/* Left - Logo */}
-        <div>
-          <Link to="/" className="text-2xl">
+      <nav
+        className={`container mx-auto flex items-center justify-between px-4 lg:px-6 transition-all duration-300 ${
+          scrolled ? "py-2.5" : "py-4"
+        }`}
+      >
+        {/* Left - Back button (mobile) + Logo */}
+        <div className="flex items-center gap-2">
+          {!isHome && (
+            <button
+              onClick={() => navigate(-1)}
+              aria-label="Go back"
+              className="md:hidden -ml-1 p-1.5 rounded-full text-charcoal hover:text-ink hover:bg-sand transition-all active:scale-90"
+            >
+              <HiOutlineArrowLeft className="h-5 w-5" />
+            </button>
+          )}
+          <Link
+            to="/"
+            className={`font-display font-semibold tracking-tight text-ink transition-all duration-300 hover:text-accent ${
+              scrolled ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"
+            }`}
+          >
             BareThreads
           </Link>
         </div>
 
         {/* Center - Navigation Links */}
-        <div className="hidden md:flex space-x-6">
-          <Link
-            to="/collections/all?gender=Men"
-            className="text-gray-700 hover:text-black text-sm font-medium uppercase"
-          >
-            Men
-          </Link>
-          <Link
-            to="/collections/all?gender=Women"
-            className="text-gray-700 hover:text-black text-sm font-medium uppercase"
-          >
-            Women
-          </Link>
-          <Link
-            to="/collections/all?category=Top Wear"
-            className="text-gray-700 hover:text-black text-sm font-medium uppercase"
-          >
-            top wear
-          </Link>
-          <Link
-            to="/collections/all?category=Bottom Wear"
-            className="text-gray-700 hover:text-black text-sm font-medium uppercase"
-          >
-            bottom wear
-          </Link>
+        <div className="hidden md:flex items-center space-x-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.label}
+              to={link.to}
+              className="relative text-sm font-medium uppercase tracking-wide text-charcoal hover:text-ink transition-colors after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-ink after:transition-all hover:after:w-full"
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
 
         {/* Right - Icons */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-3 sm:space-x-4">
           {user && user.role === "admin" && (
             <Link
               to="/admin"
-              className="block bg-black px-2 rounded text-sm text-white"
+              className="hidden sm:block bg-ink px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wide text-cream hover:bg-charcoal transition-colors"
             >
               Admin
             </Link>
           )}
-          <Link to="/profile" className="hover:text-black">
-            <HiOutlineUser className="h-6 w-6 text-gray-700" />
+          <Link
+            to="/profile"
+            aria-label="Account"
+            className="text-charcoal hover:text-ink transition-all duration-200 hover:scale-110 active:scale-95"
+          >
+            <HiOutlineUser className="h-6 w-6" />
           </Link>
 
           <button
             onClick={toggleCartDrawer}
-            className="relative hover:text-black"
+            aria-label="Cart"
+            className="relative text-charcoal hover:text-ink transition-all duration-200 hover:scale-110 active:scale-95"
           >
-            <HiOutlineShoppingBag className="h-6 w-6 text-gray-700" />
+            <HiOutlineShoppingBag className="h-6 w-6" />
             {cartItemCount > 0 && (
-              <span className="absolute -top-1 bg-[#ea2e0e] text-white text-xs rounded-full px-2 py-0.5">
+              <span className="absolute -top-1.5 -right-2 bg-accent text-white text-[10px] font-semibold rounded-full h-5 w-5 flex items-center justify-center animate-fade-in">
                 {cartItemCount}
               </span>
             )}
@@ -97,61 +125,66 @@ const Navbar = () => {
             <SearchBar />
           </div>
 
-          <button onClick={toggleNavDrawer} className="md:hidden">
-            <HiBars3BottomRight className="h-6 w-6 text-gray-700" />
+          <button
+            onClick={toggleNavDrawer}
+            aria-label="Open menu"
+            className="md:hidden text-charcoal hover:text-ink transition-colors"
+          >
+            <HiBars3BottomRight className="h-6 w-6" />
           </button>
         </div>
       </nav>
 
       <CartDrawer drawerOpen={drawerOpen} toggleCartDrawer={toggleCartDrawer} />
 
-      {/* Mobile Navigation */}
-      <div
-        className={`fixed top-0 left-0 w-3/4 sm:w-1/2 md:w-1/3 h-full bg-white shadow-2xl transform transition-transform duration-300 z-50 ${
-          navDrawerOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <div className="flex justify-end p-4">
-          <button onClick={toggleNavDrawer}>
-            <IoMdClose className="h-6 w-6 text-gray-600" />
-          </button>
-        </div>
+      {/* Mobile Navigation — portaled to <body> so it escapes the header's
+          backdrop-filter containing block (otherwise a `fixed` drawer is
+          trapped inside the ~100px header instead of filling the screen). */}
+      {createPortal(
+        <>
+          <div
+            onClick={toggleNavDrawer}
+            className={`fixed inset-0 bg-ink/40 backdrop-blur-sm z-50 md:hidden transition-opacity duration-300 ${
+              navDrawerOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+          />
+          <div
+            className={`fixed top-0 left-0 w-3/4 sm:w-1/2 md:w-80 h-full bg-cream shadow-2xl transform transition-transform duration-300 ease-out z-50 ${
+              navDrawerOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
+          >
+            <div className="flex justify-between items-center p-5 border-b border-ink/10">
+              <span className="font-display text-xl font-semibold">
+                BareThreads
+              </span>
+              <button
+                onClick={toggleNavDrawer}
+                aria-label="Close menu"
+                className="transition-transform hover:rotate-90 duration-300"
+              >
+                <IoMdClose className="h-6 w-6 text-charcoal" />
+              </button>
+            </div>
 
-        <div className="p-4">
-          <h2 className="text-xl font-semibold mb-4">Menu</h2>
-
-          <nav className="space-y-4">
-            <Link
-              to="/collections/all?gender=Men"
-              onClick={toggleNavDrawer}
-              className="block text-gray-600 hover:text-black"
-            >
-              Men
-            </Link>
-            <Link
-              to="/collections/all?gender=Women"
-              onClick={toggleNavDrawer}
-              className="block text-gray-600 hover:text-black"
-            >
-              Women
-            </Link>
-            <Link
-              to="/collections/all?category=Top Wear"
-              onClick={toggleNavDrawer}
-              className="block text-gray-600 hover:text-black"
-            >
-              Top Wear
-            </Link>
-            <Link
-              to="/collections/all?category=Bottom Wear"
-              onClick={toggleNavDrawer}
-              className="block text-gray-600 hover:text-black"
-            >
-              Bottom Wear
-            </Link>
-          </nav>
-        </div>
-      </div>
+            <div className="p-5">
+              <p className="eyebrow mb-4">Menu</p>
+              <nav className="space-y-1">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    to={link.to}
+                    onClick={toggleNavDrawer}
+                    className="block py-2.5 text-lg font-heading text-charcoal hover:text-accent transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          </div>
+        </>,
+        document.body
+      )}
     </>
   );
 };

@@ -2,22 +2,22 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../utils/axios";
 
 // Async thunk to fetch user orders
- export const fetchUserOrders = createAsyncThunk("orders/fetchUserOrders", async(_, { rejectWithVaule }) => {
+ export const fetchUserOrders = createAsyncThunk("orders/fetchUserOrders", async(_, { rejectWithValue }) => {
     try {
-        const response = await axiosInstance.get("/orders/my-orders"); 
-        return response.data.data; 
+        const response = await axiosInstance.get("/orders/my-orders");
+        return response.data.data;
     } catch (error) {
-        return rejectWithVaule(error.response.data); 
+        return rejectWithValue(error.response?.data);
     }
  })
 
 // Async thunk to fetch order details by ID
-export const fetchOrderDetails = createAsyncThunk("orders/fetchOrderDetails", async (orderId, {rejectWithVaule}) => {
+export const fetchOrderDetails = createAsyncThunk("orders/fetchOrderDetails", async (orderId, {rejectWithValue}) => {
     try {
         const response = await axiosInstance.get(`/orders/${orderId}`)
-        return response.data.data; 
+        return response.data.data;
     } catch (error) {
-        rejectWithVaule(error.response.data); 
+        return rejectWithValue(error.response?.data);
     }
 })
 
@@ -43,8 +43,8 @@ const orderSlice = createSlice({
             state.orders = action.payload; 
         })
         .addCase(fetchUserOrders.rejected, (state, action) => {
-            state.loading = false; 
-            state.error = action.payload.message; 
+            state.loading = false;
+            state.error = action.payload?.message || "Failed to load orders";
         })
         // Fetch order details
         .addCase(fetchOrderDetails.pending, (state) => {
@@ -56,9 +56,9 @@ const orderSlice = createSlice({
             state.orderDetails = action.payload; 
         })
         .addCase(fetchOrderDetails.rejected, (state, action) => {
-            state.loading = false; 
-            state.error = action.payload.message; 
-        }); 
+            state.loading = false;
+            state.error = action.payload?.message || "Failed to load order";
+        });
     }
 })
 

@@ -10,7 +10,7 @@ import { Link, NavLink, useNavigate } from "react-router";
 import { logout } from "../../redux/slices/authSlice";
 import { clearCart } from "../../redux/slices/cartSlice";
 
-const AdminSidebar = ({ isSidebarOpen, toggleSideBar }) => {
+const AdminSidebar = ({ toggleSideBar }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

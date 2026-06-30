@@ -98,7 +98,7 @@ export const mergeCart = createAsyncThunk(
   "cart/mergeCart",
   async ({ guestId, user }, { rejectWithValue }) => {
     try {
-      const response = axiosInstance.post("/cart/merge", { guestId, user });
+      const response = await axiosInstance.post("/cart/merge", { guestId, user });
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

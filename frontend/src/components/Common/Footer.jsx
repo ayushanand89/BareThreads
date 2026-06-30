@@ -1,111 +1,146 @@
+import { useState } from "react";
 import { IoLogoInstagram } from "react-icons/io";
 import { RiTwitterXLine } from "react-icons/ri";
 import { TbBrandMeta } from "react-icons/tb";
-import { FiPhoneCall } from "react-icons/fi"; 
+import { FiPhoneCall } from "react-icons/fi";
 import { Link } from "react-router";
+import { toast } from "sonner";
+import { axiosInstance } from "../../utils/axios";
+import { Reveal } from "./Reveal";
+
+const shopLinks = [
+  { label: "Men's Top Wear", to: "/collections/all?gender=Men&category=Top Wear" },
+  { label: "Women's Top Wear", to: "/collections/all?gender=Women&category=Top Wear" },
+  { label: "Men's Bottom Wear", to: "/collections/all?gender=Men&category=Bottom Wear" },
+  { label: "Women's Bottom Wear", to: "/collections/all?gender=Women&category=Bottom Wear" },
+];
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+    setSubmitting(true);
+    try {
+      await axiosInstance.post("/subscribe", { email });
+      toast.success("You're subscribed! Welcome to BareThreads.");
+      setEmail("");
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.message || "Subscription failed. Try again."
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
-    <footer className="border-t border-gray-300 py-12">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-4 lg:px-0">
-        <div>
-          <h3 className="text-lg text-gray-900 mb-4">Newsletter</h3>
-          <p className="text-gray-500 mb-4">
-            Be the first to hear about new products, exclusive events and online
-            offers.
+    <footer className="bg-cream border-t border-ink/10 pt-16 pb-8">
+      {/* Brand band */}
+      <div className="container mx-auto px-4 lg:px-6 mb-14">
+        <Reveal className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 border-b border-ink/10 pb-12">
+          <div>
+            <p className="eyebrow mb-3">Elevated Everyday</p>
+            <h2 className="font-display text-5xl md:text-7xl font-semibold text-ink leading-none">
+              BareThreads
+            </h2>
+          </div>
+          <p className="text-stone max-w-sm lg:text-right leading-relaxed">
+            Thoughtfully designed essentials — crafted to last, and made to move
+            with you wherever the season takes you.
           </p>
-          <p className="font-medium text-sm text-gray-600 mb-6">
-            Sign up and get 10% off on your first order.
+        </Reveal>
+      </div>
+
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 px-4 lg:px-6">
+        {/* Newsletter */}
+        <div className="md:pr-6">
+          <h3 className="font-heading text-base font-semibold text-ink mb-3 uppercase tracking-wide">
+            Newsletter
+          </h3>
+          <p className="text-stone text-sm mb-4 leading-relaxed">
+            Be the first to hear about new arrivals, exclusive events and online
+            offers. Sign up and get 10% off your first order.
           </p>
 
-          {/* Newsletter form */}
-          <form className="flex">
+          <form onSubmit={handleSubscribe} className="flex">
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="p-3 w-full text-sm border-t border-l border-b border-gray-300 rounded-l-md focus:outline-none focus:right-2 focus:ring-gray-500 transition-all"
+              className="p-3 w-full text-sm border border-ink/20 rounded-l-md bg-white focus:outline-none focus:border-ink transition-colors"
               required
             />
             <button
               type="submit"
-              className="bg-black text-white px-6 py-3 text-sm rounded-r-md hover:bg-gray-800"
+              disabled={submitting}
+              className="bg-ink text-cream px-5 text-sm rounded-r-md hover:bg-charcoal transition-colors disabled:opacity-60"
             >
-              Subscribe
+              {submitting ? "..." : "Subscribe"}
             </button>
           </form>
         </div>
 
-        {/* Shop Links */}
+        {/* Shop */}
         <div>
-          <h3 className="text-lg text-gray-900 mb-4">Shop</h3>
-          <ul className="space-y-2 text-gray-600">
-            <li>
-              <Link to="#" className="hover:text-[#ea2e0e] transition-colors">
-                Men's Top Wear
-              </Link>
-            </li>
-            <li>
-              <Link to="#" className="hover:text-[#ea2e0e] transition-colors">
-                Women's Top Wear
-              </Link>
-            </li>
-            <li>
-              <Link to="#" className="hover:text-[#ea2e0e] transition-colors">
-                Men's Bottom Wear
-              </Link>
-            </li>
-            <li>
-              <Link to="#" className="hover:text-[#ea2e0e] transition-colors">
-                Women's Bottom Wear
-              </Link>
-            </li>
+          <h3 className="font-heading text-base font-semibold text-ink mb-4 uppercase tracking-wide">
+            Shop
+          </h3>
+          <ul className="space-y-2.5 text-sm text-stone">
+            {shopLinks.map((link) => (
+              <li key={link.label}>
+                <Link to={link.to} className="hover:text-accent transition-colors">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
-        {/* Support Links */}
+        {/* Support */}
         <div>
-          <h3 className="text-lg text-gray-900 mb-4">Support</h3>
-          <ul className="space-y-2 text-gray-600">
+          <h3 className="font-heading text-base font-semibold text-ink mb-4 uppercase tracking-wide">
+            Support
+          </h3>
+          <ul className="space-y-2.5 text-sm text-stone">
             <li>
-              <Link to="#" className="hover:text-[#ea2e0e] transition-colors">
+              <Link to="/collections/all" className="hover:text-accent transition-colors">
+                All Products
+              </Link>
+            </li>
+            <li>
+              <Link to="/my-orders" className="hover:text-accent transition-colors">
+                Track Order
+              </Link>
+            </li>
+            <li>
+              <Link to="/profile" className="hover:text-accent transition-colors">
+                My Account
+              </Link>
+            </li>
+            <li>
+              <a href="mailto:hello@barethreads.com" className="hover:text-accent transition-colors">
                 Contact Us
-              </Link>
-            </li>
-            <li>
-              <Link to="#" className="hover:text-[#ea2e0e] transition-colors">
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link to="#" className="hover:text-[#ea2e0e] transition-colors">
-                FAQs
-              </Link>
-            </li>
-            <li>
-              <Link to="#" className="hover:text-[#ea2e0e] transition-colors">
-                Features
-              </Link>
+              </a>
             </li>
           </ul>
         </div>
 
-        {/* Follow Us */}
+        {/* Follow */}
         <div>
-          <h3 className="text-lg text-gray-900 mb-4">Follow Us</h3>
+          <h3 className="font-heading text-base font-semibold text-ink mb-4 uppercase tracking-wide">
+            Follow Us
+          </h3>
           <div className="flex items-center space-x-4 mb-6">
             <a
-              href="https://www.facebook.com"
+              href="https://www.instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-300"
-            >
-              <TbBrandMeta className="h-5 w-5" />
-            </a>
-            <a
-              href="https://www.facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-gray-300"
+              aria-label="Instagram"
+              className="text-charcoal hover:text-accent transition-colors"
             >
               <IoLogoInstagram className="h-5 w-5" />
             </a>
@@ -113,22 +148,33 @@ const Footer = () => {
               href="https://www.facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-300"
+              aria-label="Meta"
+              className="text-charcoal hover:text-accent transition-colors"
+            >
+              <TbBrandMeta className="h-5 w-5" />
+            </a>
+            <a
+              href="https://www.x.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="X"
+              className="text-charcoal hover:text-accent transition-colors"
             >
               <RiTwitterXLine className="h-4 w-4" />
             </a>
           </div>
-          <p className="text-gray-500">Call Us</p>
-          <p>
+          <p className="text-stone text-sm mb-1">Call Us</p>
+          <p className="flex items-center text-ink text-sm">
             <FiPhoneCall className="inline-block mr-2" />
             0123-456-789
           </p>
         </div>
       </div>
 
-      {/* Footer Bottom */}
-      <div className="container mx-auto mt-12 px-4 lg:px-0 border-t border-gray-200 pt-6">
-        <p className="text-gray-500 text-sm tracking-tighter text-center">© 2025, BareThreads. All Rights Reserved.</p>
+      <div className="container mx-auto mt-12 px-4 lg:px-6 border-t border-ink/10 pt-6">
+        <p className="text-stone text-xs tracking-wide text-center">
+          © 2026 BareThreads. All Rights Reserved.
+        </p>
       </div>
     </footer>
   );

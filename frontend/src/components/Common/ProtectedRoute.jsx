@@ -10,8 +10,6 @@ const ProtectedRoute = ({ children, role }) => {
   }
 
   return children;
-
-  return <div>ProtectedRoute</div>;
 };
 
 export default ProtectedRoute;

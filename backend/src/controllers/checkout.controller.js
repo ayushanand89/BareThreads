@@ -58,6 +58,10 @@ const updateCheckout = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Checkout not found");
   }
 
+  if (checkout.user.toString() !== req.user._id.toString()) {
+    throw new ApiError(403, "Not authorized to update this checkout");
+  }
+
   if (!paymentStatus || typeof paymentStatus !== "string") {
     throw new ApiError(400, "Payment status is required and must be a string");
   }
@@ -83,6 +87,10 @@ const confirmCheckout = asyncHandler(async (req, res) => {
 
   if (!checkout) {
     throw new ApiError(404, "Checkout not found");
+  }
+
+  if (checkout.user.toString() !== req.user._id.toString()) {
+    throw new ApiError(403, "Not authorized to finalize this checkout");
   }
 
   if (checkout.isFinalized) {
