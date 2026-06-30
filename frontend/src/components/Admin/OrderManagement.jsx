@@ -25,44 +25,48 @@ const OrderManagement = () => {
     dispatch(updateOrderStatus({ id: orderId, status }));
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <p className="text-stone">Loading...</p>;
+  if (error) return <p className="text-danger">Error: {error}</p>;
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-6">Order Management</h2>
+    <div className="max-w-7xl mx-auto">
+      <p className="eyebrow mb-1.5">Operations</p>
+      <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink mb-8">
+        Order Management
+      </h2>
 
-      <div className="overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="min-w-full text-left text-gray-500">
-          <thead className="bg-gray-200 text-xs uppercase text-gray-700">
+      <div className="bg-white border border-ink/10 rounded-2xl shadow-[var(--shadow-card)] overflow-x-auto hide-scrollbar">
+        <table className="min-w-full text-left text-stone">
+          <thead className="bg-sand/70 text-[11px] uppercase tracking-wider text-charcoal">
             <tr>
-              <th className="py-3 px-4">Order ID</th>
-              <th className="py-3 px-4">Customer</th>
-              <th className="py-3 px-4">Total Price</th>
-              <th className="py-3 px-4">Status</th>
-              <th className="py-3 px-4">Actions</th>
+              <th className="py-3 px-5">Order ID</th>
+              <th className="py-3 px-5">Customer</th>
+              <th className="py-3 px-5">Total</th>
+              <th className="py-3 px-5">Status</th>
+              <th className="py-3 px-5">Action</th>
             </tr>
           </thead>
-
           <tbody>
             {orders.length > 0 ? (
               orders.map((order) => (
                 <tr
                   key={order._id}
-                  className="border-b hover:bg-gray-50 cursor-pointer"
+                  className="border-b border-ink/5 hover:bg-cream transition-colors"
                 >
-                  <td className="py-4 px-4 font-medium text-gray-900 whitespace-nowrap">
-                    #{order._id}
+                  <td className="py-4 px-5 font-medium text-ink whitespace-nowrap">
+                    #{order._id.slice(-8)}
                   </td>
-                  <td className="p-4">{order.user.name}</td>
-                  <td className="p-4">${order.totalPrice.toFixed(2)}</td>
-                  <td className="p-4">
+                  <td className="py-4 px-5">{order.user?.name || "—"}</td>
+                  <td className="py-4 px-5 text-ink">
+                    ${order.totalPrice?.toFixed(2)}
+                  </td>
+                  <td className="py-4 px-5">
                     <select
                       value={order.status}
                       onChange={(e) =>
                         handleStatusChange(order._id, e.target.value)
                       }
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                      className="border border-ink/20 bg-white text-ink text-sm rounded-md px-3 py-2 cursor-pointer focus:outline-none focus:border-ink focus:ring-1 focus:ring-ink/20"
                     >
                       <option value="Processing">Processing</option>
                       <option value="Shipped">Shipped</option>
@@ -70,20 +74,21 @@ const OrderManagement = () => {
                       <option value="Cancelled">Cancelled</option>
                     </select>
                   </td>
-                  <td className="p-4">
+                  <td className="py-4 px-5">
                     <button
                       onClick={() => handleStatusChange(order._id, "Delivered")}
-                      className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                      disabled={order.status === "Delivered"}
+                      className="text-sm font-medium px-4 py-2 rounded-md bg-ink text-cream hover:bg-charcoal transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
                     >
-                      Mark as Delivered
+                      Mark Delivered
                     </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="p-4 text-center text-gray-500">
-                  No Orders Found
+                <td colSpan={5} className="py-10 px-5 text-center text-stone">
+                  No orders found
                 </td>
               </tr>
             )}

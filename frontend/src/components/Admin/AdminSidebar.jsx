@@ -10,6 +10,13 @@ import { Link, NavLink, useNavigate } from "react-router";
 import { logout } from "../../redux/slices/authSlice";
 import { clearCart } from "../../redux/slices/cartSlice";
 
+const links = [
+  { to: "/admin/users", label: "Users", icon: FaUser },
+  { to: "/admin/products", label: "Products", icon: FaBoxOpen },
+  { to: "/admin/orders", label: "Orders", icon: FaClipboardList },
+  { to: "/", label: "Back to Shop", icon: FaStore },
+];
+
 const AdminSidebar = ({ toggleSideBar }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,83 +27,54 @@ const AdminSidebar = ({ toggleSideBar }) => {
     navigate("/");
   };
 
-  return (
-    <div className="p-6">
-      <div className="mb-6">
-        <Link to="/admin" className="text-2xl font-medium">
-          BareThreads
-        </Link>
-      </div>
-      <h2 className="text-xl font-medium mb-6 text-center">Admin Dashboard</h2>
+  const closeOnMobile = () => {
+    if (window.innerWidth < 768) toggleSideBar();
+  };
 
-      <nav className="flex flex-col space-y-2">
-        <NavLink
-          to="/admin/users"
-          onClick={() => {
-            if (window.innerWidth < 768) toggleSideBar(); // close on mobile
-          }}
-          className={({ isActive }) =>
-            isActive
-              ? "bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2"
-              : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded flex items-center space-x-2"
-          }
-        >
-          <FaUser />
-          <span>Users</span>
-        </NavLink>
-        <NavLink
-          to="/admin/products"
-          onClick={() => {
-            if (window.innerWidth < 768) toggleSideBar(); // close on mobile
-          }}
-          className={({ isActive }) =>
-            isActive
-              ? "bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2"
-              : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded flex items-center space-x-2"
-          }
-        >
-          <FaBoxOpen />
-          <span>Products</span>
-        </NavLink>
-        <NavLink
-          to="/admin/orders"
-          onClick={() => {
-            if (window.innerWidth < 768) toggleSideBar(); // close on mobile
-          }}
-          className={({ isActive }) =>
-            isActive
-              ? "bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2"
-              : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded flex items-center space-x-2"
-          }
-        >
-          <FaClipboardList />
-          <span>Orders</span>
-        </NavLink>
-        <NavLink
-          to="/"
-          onClick={() => {
-            if (window.innerWidth < 768) toggleSideBar(); // close on mobile
-          }}
-          className={({ isActive }) =>
-            isActive
-              ? "bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2"
-              : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded flex items-center space-x-2"
-          }
-        >
-          <FaStore />
-          <span>Shop</span>
-        </NavLink>
+  return (
+    <div className="p-6 flex flex-col h-full">
+      <Link
+        to="/admin"
+        onClick={closeOnMobile}
+        className="font-display text-2xl font-semibold text-cream"
+      >
+        BareThreads
+      </Link>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-gold mt-1 mb-8">
+        Admin Suite
+      </p>
+
+      <nav className="flex flex-col gap-1.5 flex-1">
+        {links.map((link) => {
+          const Icon = link.icon;
+          return (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end={link.to === "/"}
+              onClick={closeOnMobile}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                  isActive
+                    ? "bg-cream text-ink"
+                    : "text-cream/65 hover:text-cream hover:bg-white/[0.06]"
+                }`
+              }
+            >
+              <Icon className="text-base" />
+              <span>{link.label}</span>
+            </NavLink>
+          );
+        })}
       </nav>
 
-      <div className="mt-6">
-        <button
-          onClick={handleLogout}
-          className="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded  flex items-center justify-center space-x-2"
-        >
-          <FaSignOutAlt />
-          <span>Logout</span>
-        </button>
-      </div>
+      <button
+        onClick={handleLogout}
+        className="flex items-center justify-center gap-2 w-full mt-6 border border-cream/20 text-cream/90 rounded-lg py-3 text-sm font-medium transition-all duration-300 hover:border-danger hover:bg-danger hover:text-white active:scale-[0.98]"
+      >
+        <FaSignOutAlt />
+        Logout
+      </button>
     </div>
   );
 };

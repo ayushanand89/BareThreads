@@ -19,7 +19,7 @@ export const updateOrderStatus = createAsyncThunk(
   "adminOrders/updateOrderStatus",
   async ({ id, status }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/admin/orders/${id}`, {
+      const response = await axiosInstance.put(`/admin/orders/${id}`, {
         status,
       });
       return response.data.data;
@@ -66,9 +66,9 @@ const adminOrderSlice = createSlice({
 
             // calculate total sales
             const totalSales = action.payload.reduce((acc, order) => {
-                return acc + order.totalPrce; 
+                return acc + (order.totalPrice || 0);
             }, 0);
-            state.totalSales = totalSales;  
+            state.totalSales = totalSales;
         })
         .addCase(fetchAllOrders.rejected, (state, action) => {
             state.loading = false; 

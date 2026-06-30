@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>BareThreads — Project Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Montserrat:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,500;1,600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#F8EBDA;     /* warm light background */
+    --sand:#EFE1CD;
+    --accent:#A8703C;    /* warm tan accent */
+    --accent-d:#85562B;
+    --noir:#15110D;      /* warm near-black */
+    --ink:#161413;
+    --muted:#8A8378;     /* stone */
+    --gold:#C6A15B;      /* light gold accent on dark */
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:#d8cdbb;font-family:"Inter",system-ui,sans-serif;}
+  .help{max-width:1080px;margin:24px auto;padding:16px 22px;background:#fff;border-radius:14px;color:#333;font-size:14px;line-height:1.5;box-shadow:0 4px 18px rgba(0,0,0,.08);}
+  .help b{color:var(--accent);}
+  .deck{display:flex;flex-direction:column;align-items:center;gap:28px;padding:8px 0 60px;}
+  .slide{width:1080px;height:1080px;background:var(--cream);position:relative;display:flex;flex-direction:column;padding:60px 72px;overflow:hidden;}
+  .brandbar{display:flex;justify-content:space-between;align-items:center;font-family:"Playfair Display",serif;font-weight:800;font-size:26px;color:var(--ink);}
+  .brandbar .logo::before{content:"";display:inline-block;width:16px;height:16px;border-radius:5px;background:var(--accent);margin-right:12px;vertical-align:-1px;}
+  .brandbar .count{font-family:"Inter",sans-serif;color:var(--muted);font-weight:700;font-size:20px;letter-spacing:2px;}
+
+  .head{margin-top:34px;}
+  .sect{display:inline-block;background:var(--sand);color:var(--accent-d);font-weight:800;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;padding:8px 16px;border-radius:999px;margin-bottom:20px;font-family:"Montserrat",sans-serif;}
+  .sect.alt{background:#efe6dc;color:#7a5a86;}
+  .sect.dark2{background:var(--sand);color:var(--accent-d);}
+  .head h2{font-family:"Playfair Display",serif;font-weight:800;font-size:54px;line-height:1.05;color:var(--ink);letter-spacing:-1px;}
+  .head p{font-size:25px;line-height:1.42;color:var(--muted);font-weight:600;max-width:920px;margin-top:14px;}
+  .rule{width:72px;height:6px;border-radius:3px;background:var(--accent);margin:20px 0;}
+
+  .shot{margin-top:30px;flex:1;min-height:0;background:#fff;border:1px solid #e7dccb;border-radius:24px;box-shadow:0 24px 60px rgba(21,17,13,.14);display:flex;align-items:center;justify-content:center;padding:20px;overflow:hidden;}
+  .shot img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;display:block;}
+  .shot .missing{color:#c7bba6;font-weight:700;font-size:22px;}
+
+  .points{margin-top:34px;display:flex;flex-direction:column;gap:24px;}
+  .points .row{border-left:5px solid var(--accent);padding-left:24px;}
+  .points .t{font-family:"Montserrat",sans-serif;font-weight:800;font-size:31px;color:var(--ink);}
+  .points .r{font-size:24px;color:var(--muted);font-weight:600;margin-top:4px;line-height:1.35;}
+
+  .slide.dark{background:var(--noir);color:var(--cream);}
+  .slide.dark .brandbar{color:var(--cream);} .slide.dark .brandbar .count{color:var(--gold);}
+  .slide.dark .brandbar .logo::before{background:var(--gold);}
+  .center{justify-content:center;}
+  .big h1{font-family:"Playfair Display",serif;font-weight:800;font-size:80px;line-height:1.02;letter-spacing:-2px;color:#fff;}
+  .big h1 .it{font-style:italic;color:var(--gold);}
+  .big .sub{margin-top:28px;font-size:30px;color:var(--gold);font-weight:700;line-height:1.4;}
+  .big .meta{margin-top:auto;font-size:23px;color:#cbb792;font-weight:600;}
+
+  .cta .cta-body{display:flex;flex-direction:column;gap:28px;}
+  .cta h2{font-family:"Playfair Display",serif;font-weight:800;font-size:62px;line-height:1.05;letter-spacing:-1.4px;color:#fff;}
+  .cta .stack{display:flex;flex-wrap:wrap;gap:14px;}
+  .cta .chip{background:#2a211a;color:var(--cream);border:1px solid #45382c;padding:13px 20px;border-radius:999px;font-weight:700;font-size:22px;}
+  .cta .line{font-size:26px;color:var(--gold);font-weight:600;line-height:1.5;}
+  .cta .cta-big{font-weight:900;font-size:38px;color:#fff;line-height:1.2;margin-top:6px;}
+
+  @media print{
+    html,body{background:#fff;} .help{display:none;} .deck{gap:0;padding:0;}
+    .slide{box-shadow:none;break-after:page;page-break-after:always;}
+    @page{size:1080px 1080px;margin:0;}
+  }
+</style>
+</head>
+<body>
+  <div class="help"><b>BareThreads case-study carousel (14 slides).</b> Save screenshots in an <b>img/</b> folder next to this file using the names shown on each slide. Open in Chrome → <b>Ctrl/Cmd+P</b> → Save as PDF → Margins <b>None</b> → <b>Background graphics ON</b>. Upload the PDF as the media item on your LinkedIn project.</div>
+
+  <div class="deck">
+
+    <!-- 1 COVER -->
+    <section class="slide dark">
+      <div class="brandbar"><span class="logo">BareThreads</span><span class="count">01 / 14</span></div>
+      <div class="big" style="margin-top:34px;">
+        <h1>Bare<span class="it">Threads</span></h1>
+        <div class="sub" style="margin-top:16px;">A full-stack fashion e-commerce platform — built end to end.</div>
+      </div>
+      <div class="shot" style="margin-top:30px;"><img src="img/cover.png" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'missing',textContent:'img/cover.png — homepage screenshot'}))"></div>
+      <div class="meta" style="margin-top:22px;font-size:22px;color:#cbb792;font-weight:600;">React 19 · Express · MongoDB · Vercel · barethreads.vercel.app</div>
+    </section>
+
+    <!-- 2 INTRO -->
+    <section class="slide dark center">
+      <div class="brandbar"><span class="logo">BareThreads</span><span class="count">02 / 14</span></div>
+      <div class="big">
+        <h1>Anyone can list products.<br>Few feel like a <span class="it">brand.</span></h1>
+        <div class="sub">I set out to build a real online store — premium on the surface, secure and correct underneath. So I designed and engineered the whole thing, end to end.</div>
+      </div>
+    </section>
+
+    <!-- 3 OVERVIEW -->
+    <section class="slide">
+      <div class="brandbar"><span class="logo">BareThreads</span><span class="count">03 / 14</span></div>
+      <div class="head">
+        <span class="sect">The product</span>
+        <h2>One platform, two sides.</h2>
+        <p>A polished storefront for shoppers and an admin suite for the team — sharing one secure REST API.</p>
+      </div>
+      <div class="shot"><img src="img/home.png" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'missing',textContent:'img/home.png'}))"></div>
+    </section>
+
+    <!-- 4 COLLECTIONS -->
+    <section class="slide">
+      <div class="brandbar"><span class="logo">BareThreads</span><span class="count">04 / 14</span></div>
+      <div class="head">
+        <span class="sect">Storefront</span>
+        <h2>Shop the edit.</h2>
+        <p>A filterable catalog — by category, gender, size, color, brand and price — with live sort and removable filter chips.</p>
+      </div>
+      <div class="shot"><img src="img/collections.png" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'missing',textContent:'img/collections.png'}))"></div>
+    </section>
+
+    <!-- 5 PRODUCT -->
+    <section class="slide">
+      <div class="brandbar"><span class="logo">BareThreads</span><span class="count">05 / 14</span></div>
+      <div class="head">
+        <span class="sect">Storefront</span>
+        <h2>Product pages that sell.</h2>
+        <p>Cursor-following magnifier zoom, a thumbnail gallery, size &amp; color pickers, discount pricing and "complete the look".</p>
+      </div>
+      <div class="shot"><img src="img/product.png" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'missing',textContent:'img/product.png'}))"></div>
+    </section>
+
+    <!-- 6 CHECKOUT -->
+    <section class="slide">
+      <div class="brandbar"><span class="logo">BareThreads</span><span class="count">06 / 14</span></div>
+      <div class="head">
+        <span class="sect">Storefront</span>
+        <h2>Cart to checkout.</h2>
+        <p>Build a cart as a guest, then merge it on sign-in. Stock-validated quantities and PayPal checkout through to order confirmation.</p>
+      </div>
+      <div class="shot"><img src="img/checkout.png" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'missing',textContent:'img/checkout.png'}))"></div>
+    </section>
+
+    <!-- 7 REVIEWS -->
+    <section class="slide">
+      <div class="brandbar"><span class="logo">BareThreads</span><span class="count">07 / 14</span></div>
+      <div class="head">
+        <span class="sect">Storefront</span>
+        <h2>Ratings &amp; reviews.</h2>
+        <p>Customers rate and review; product averages are computed server-side with an aggregation, so every screen agrees.</p>
+      </div>
+      <div class="shot"><img src="img/reviews.png" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'missing',textContent:'img/reviews.png'}))"></div>
+    </section>
+
+    <!-- 8 AUTH -->
+    <section class="slide">
+      <div class="brandbar"><span class="logo">BareThreads</span><span class="count">08 / 14</span></div>
+      <div class="head">
+        <span class="sect">Accounts</span>
+        <h2>Sign in, your way.</h2>
+        <p>Email &amp; password or "Continue with Google" — both verified server-side and issuing the same secure session.</p>
+      </div>
+      <div class="shot"><img src="img/login.png" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'missing',textContent:'img/login.png'}))"></div>
+    </section>
+
+    <!-- 9 PROFILE / ORDERS -->
+    <section class="slide">
+      <div class="brandbar"><span class="logo">BareThreads</span><span class="count">09 / 14</span></div>
+      <div class="head">
+        <span class="sect">Accounts</span>
+        <h2>Profile &amp; orders.</h2>
+        <p>A personal account with avatar, order history and order details — each order scoped to its owner on the server.</p>
+      </div>
+      <div class="shot"><img src="img/profile.png" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'missing',textContent:'img/profile.png'}))"></div>
+    </section>
+
+    <!-- 10 ADMIN -->
+    <section class="slide">
+      <div class="brandbar"><span class="logo">BareThreads</span><span class="count">10 / 14</span></div>
+      <div class="head">
+        <span class="sect alt">Admin suite</span>
+        <h2>Run the store.</h2>
+        <p>An admin dashboard to manage products, orders and users — full CRUD, behind role-gated, admin-only routes.</p>
+      </div>
+      <div class="shot"><img src="img/admin.png" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'missing',textContent:'img/admin.png'}))"></div>
+    </section>
+
+    <!-- 11 ARCHITECTURE -->
+    <section class="slide">
+      <div class="brandbar"><span class="logo">BareThreads</span><span class="count">11 / 14</span></div>
+      <div class="head">
+        <span class="sect dark2">Under the hood</span>
+        <h2>Secure &amp; serverless.</h2>
+      </div>
+      <div class="points">
+        <div class="row"><div class="t">Serverless-safe data layer</div><div class="r">A cached MongoDB connection is awaited inside each request, so the API connects reliably on Vercel's serverless runtime — fixing cold-start failures.</div></div>
+        <div class="row"><div class="t">Auth, two ways</div><div class="r">JWT in cross-site httpOnly cookies, plus Google sign-in verified server-side from a Google ID token — both issue the same session.</div></div>
+        <div class="row"><div class="t">Authorization at the controller</div><div class="r">Ownership checks scope every order and checkout to its owner; admin routes are gated. IDOR holes closed, writes field-whitelisted.</div></div>
+        <div class="row"><div class="t">Correct commerce</div><div class="r">Guest→user cart merge, server-computed ratings, discount pricing and stock validation — with a consistent JSON error contract.</div></div>
+      </div>
+    </section>
+
+    <!-- 12 STACK -->
+    <section class="slide">
+      <div class="brandbar"><span class="logo">BareThreads</span><span class="count">12 / 14</span></div>
+      <div class="head">
+        <span class="sect dark2">Under the hood</span>
+        <h2>The stack, and why.</h2>
+      </div>
+      <div class="points">
+        <div class="row"><div class="t">React 19 · Vite · Redux Toolkit</div><div class="r">A fast SPA with predictable state and clean async data flows.</div></div>
+        <div class="row"><div class="t">Tailwind v4 · Framer Motion</div><div class="r">A token-based design system with parallax, scroll-reveal motion and 3D product cards.</div></div>
+        <div class="row"><div class="t">Express 5 · MongoDB (Mongoose)</div><div class="r">A REST API with a resilient data layer and a global error handler.</div></div>
+        <div class="row"><div class="t">JWT · Google OAuth · PayPal · Cloudinary · Vercel</div><div class="r">Secure auth, payments, media and serverless hosting.</div></div>
+      </div>
+    </section>
+
+    <!-- 13 DESIGN SYSTEM -->
+    <section class="slide">
+      <div class="brandbar"><span class="logo">BareThreads</span><span class="count">13 / 14</span></div>
+      <div class="head">
+        <span class="sect">Craft</span>
+        <h2>Premium by design.</h2>
+      </div>
+      <div class="points">
+        <div class="row"><div class="t">A real design system</div><div class="r">Warm neutral palette, Playfair + Montserrat + Inter type, and reusable tokens for color, shadow and motion.</div></div>
+        <div class="row"><div class="t">Motion with intent</div><div class="r">Cinematic hero, scroll-reveal sections, editorial parallax and cursor-tracking 3D product cards.</div></div>
+        <div class="row"><div class="t">Details that matter</div><div class="r">Magnifier zoom, skeleton loaders, antialiased image clipping and a custom SVG favicon.</div></div>
+        <div class="row"><div class="t">Responsive throughout</div><div class="r">Portaled drawers, sticky filters and a layout that holds from mobile to widescreen.</div></div>
+      </div>
+    </section>
+
+    <!-- 14 CTA -->
+    <section class="slide dark cta center">
+      <div class="brandbar"><span class="logo">BareThreads</span><span class="count">14 / 14</span></div>
+      <div class="cta-body">
+        <h2>Designed &amp; built end to end.</h2>
+        <div class="stack">
+          <span class="chip">React 19</span><span class="chip">Redux Toolkit</span>
+          <span class="chip">Tailwind v4</span><span class="chip">Framer Motion</span>
+          <span class="chip">Express · MongoDB</span><span class="chip">JWT · Google OAuth</span>
+          <span class="chip">PayPal</span><span class="chip">Vercel</span>
+        </div>
+        <div class="line">Full-stack storefront · secure serverless API · payments · an admin suite.</div>
+        <div class="cta-big">Live at barethreads.vercel.app — let's talk 👇</div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

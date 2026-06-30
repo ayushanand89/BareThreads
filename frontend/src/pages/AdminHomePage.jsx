@@ -1,8 +1,16 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
+import { HiOutlineArrowRight } from "react-icons/hi2";
 import { fetchAdminProducts } from "../redux/slices/adminProductSlice";
 import { fetchAllOrders } from "../redux/slices/adminOrderSlice";
+
+const statusStyles = {
+  Delivered: "bg-success/10 text-success",
+  Shipped: "bg-amber-100 text-amber-700",
+  Processing: "bg-sand text-charcoal",
+  Cancelled: "bg-danger/10 text-danger",
+};
 
 const AdminHomePage = () => {
   const dispatch = useDispatch();
@@ -24,77 +32,108 @@ const AdminHomePage = () => {
     dispatch(fetchAllOrders());
   }, [dispatch]);
 
-  return (
-    <div className="max-w-7xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
-      {productsLoading || ordersLoading ? (
-        <p>Loading...</p>
-      ) : productsError ? (
-        <p className="text-red-500">
-          Error fetching Products : {productsError}
-        </p>
-      ) : ordersError ? (
-        <p className="text-red-500">Error fetching orders: {ordersError}</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="p-4 shadow-md rounded-lg">
-            <h2 className="text-xl font-semibold">Revenue</h2>
-            <p className="text-2xl">${totalSales.toFixed(2)}</p>
-          </div>
-          <div className="p-4 shadow-md rounded-lg">
-            <h2 className="text-xl font-semibold">Total Orders</h2>
-            <p className="text-2xl">{totalOrders}</p>
-            <Link to="/admin/orders" className="text-blue-500 hover:underline">
-              Manage Orders
-            </Link>
-          </div>
-          <div className="p-4 shadow-md rounded-lg">
-            <h2 className="text-xl font-semibold">Total Products</h2>
-            <p className="text-2xl">{products.length}</p>
-            <Link to="/admin/orders" className="text-blue-500 hover:underline">
-              Manage Products
-            </Link>
-          </div>
-        </div>
-      )}
+  const cards = [
+    {
+      label: "Revenue",
+      value: `$${(totalSales || 0).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}`,
+      to: "/admin/orders",
+      link: "View orders",
+    },
+    { label: "Total Orders", value: totalOrders, to: "/admin/orders", link: "Manage orders" },
+    { label: "Total Products", value: products.length, to: "/admin/products", link: "Manage products" },
+  ];
 
-      {/* Recent Orders */}
-      <div className="mt-6">
-        <h2 className="text-2xl font-bold mb-4">Recent Orders</h2>
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-left text-gray-500">
-            <thead className="bg-gray-100 text-xs uppercase text-gray-700">
-              <tr>
-                <th className="py-3 px-4">Order ID</th>
-                <th className="py-3 px-4">User</th>
-                <th className="py-3 px-4">Total Price</th>
-                <th className="py-3 px-4">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.length > 0 ? (
-                orders.map((order) => (
-                  <tr
-                    key={order._id}
-                    className="border-b hover:bg-gray-50 cursor-pointer"
-                  >
-                    <td className="p-4">{order._id}</td>
-                    <td className="p-4">{order.user.name}</td>
-                    <td className="p-4">{order.totalPrice.toFixed(2)}</td>
-                    <td className="p-4">{order.status}</td>
-                  </tr>
-                ))
-              ) : (
+  return (
+    <div className="max-w-7xl mx-auto">
+      <p className="eyebrow mb-1.5">Overview</p>
+      <h1 className="font-display text-3xl md:text-4xl font-semibold text-ink mb-8">
+        Admin Dashboard
+      </h1>
+
+      {productsLoading || ordersLoading ? (
+        <p className="text-stone">Loading...</p>
+      ) : productsError || ordersError ? (
+        <p className="text-danger">{productsError || ordersError}</p>
+      ) : (
+        <>
+          {/* KPI cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10">
+            {cards.map((c) => (
+              <div
+                key={c.label}
+                className="bg-white border border-ink/10 rounded-2xl shadow-[var(--shadow-card)] p-6"
+              >
+                <p className="text-xs font-medium uppercase tracking-wider text-stone mb-2">
+                  {c.label}
+                </p>
+                <p className="font-display text-4xl font-semibold text-ink">
+                  {c.value}
+                </p>
+                <Link
+                  to={c.to}
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-dark mt-3 group"
+                >
+                  {c.link}
+                  <HiOutlineArrowRight className="transition-transform group-hover:translate-x-0.5" />
+                </Link>
+              </div>
+            ))}
+          </div>
+
+          {/* Recent orders */}
+          <h2 className="font-heading text-lg font-semibold text-ink mb-4">
+            Recent Orders
+          </h2>
+          <div className="bg-white border border-ink/10 rounded-2xl shadow-[var(--shadow-card)] overflow-x-auto hide-scrollbar">
+            <table className="min-w-full text-left text-stone">
+              <thead className="bg-sand/70 text-[11px] uppercase tracking-wider text-charcoal">
                 <tr>
-                  <td colSpan={4} className="p-4 text-center text-gray-500">
-                    No recent orders found
-                  </td>
+                  <th className="py-3 px-5">Order ID</th>
+                  <th className="py-3 px-5">Customer</th>
+                  <th className="py-3 px-5">Total</th>
+                  <th className="py-3 px-5">Status</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+              </thead>
+              <tbody>
+                {orders.length > 0 ? (
+                  orders.slice(0, 8).map((order) => (
+                    <tr
+                      key={order._id}
+                      className="border-b border-ink/5 hover:bg-cream transition-colors"
+                    >
+                      <td className="py-3.5 px-5 font-medium text-ink whitespace-nowrap">
+                        #{order._id.slice(-8)}
+                      </td>
+                      <td className="py-3.5 px-5">{order.user?.name || "—"}</td>
+                      <td className="py-3.5 px-5 text-ink">
+                        ${order.totalPrice?.toFixed(2)}
+                      </td>
+                      <td className="py-3.5 px-5">
+                        <span
+                          className={`px-2.5 py-1 rounded-full text-xs font-medium ${
+                            statusStyles[order.status] || "bg-sand text-charcoal"
+                          }`}
+                        >
+                          {order.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={4} className="py-10 px-5 text-center text-stone">
+                      No recent orders found
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </div>
   );
 };
