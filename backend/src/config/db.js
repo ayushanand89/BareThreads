@@ -1,74 +1,44 @@
 import mongoose from "mongoose";
 
-// Fail fast instead of buffering commands for 10s when the DB is down,
-// so API requests return a clear error rather than hanging.
-mongoose.set("bufferTimeoutMS", 5000);
+// Cache the connection across warm serverless invocations so we don't open a
+// new connection on every request (and so a pending connection survives).
+let cached = global._mongooseConn;
+if (!cached) {
+  cached = global._mongooseConn = { conn: null, promise: null };
+}
 
-let isConnected = false;
-let retrying = false;
+export const isDBConnected = () => mongoose.connection.readyState === 1;
 
-export const isDBConnected = () => isConnected;
-
-const attachListeners = () => {
-  mongoose.connection.on("disconnected", () => {
-    isConnected = false;
-    console.warn("⚠️  MongoDB disconnected — will keep retrying...");
-    scheduleReconnect();
-  });
-  mongoose.connection.on("reconnected", () => {
-    isConnected = true;
-    console.log("✅ MongoDB reconnected");
-  });
-};
-
-const tryConnect = async () => {
-  await mongoose.connect(process.env.MONGO_URI, {
-    serverSelectionTimeoutMS: 8000,
-  });
-  isConnected = true;
-};
-
-// Background reconnect loop — keeps attempting until the DB is reachable
-// (e.g. after an Atlas cluster is resumed) so the server self-heals without
-// needing a manual restart.
-const scheduleReconnect = () => {
-  if (retrying || isConnected) return;
-  retrying = true;
-
-  const loop = async () => {
-    while (!isConnected) {
-      await new Promise((r) => setTimeout(r, 5000));
-      try {
-        await tryConnect();
-        console.log("✅ MongoDB connected (recovered)");
-      } catch (error) {
-        console.error(`🔁 Reconnect attempt failed: ${error.message}`);
-      }
-    }
-    retrying = false;
-  };
-  loop();
-};
-
+/**
+ * Establish (or reuse) the MongoDB connection.
+ *
+ * Critically, this is meant to be AWAITED inside the request lifecycle. On
+ * serverless platforms (Vercel) the function freezes the instant a response is
+ * sent, so a fire-and-forget connection started at boot never finishes — the
+ * connection must complete while a request is still in flight.
+ */
 export const connectDB = async () => {
-  try {
-    await tryConnect();
-    attachListeners();
-    console.log("✅ MongoDB connected successfully");
-  } catch (error) {
-    console.error(`❌ Initial MongoDB connection failed: ${error.message}`);
-    console.error(
-      "\n──────────────────────────────────────────────────────────────\n" +
-        "  Could not connect to MongoDB yet. The API is running and will\n" +
-        "  keep retrying in the background every 5s. DB routes return 503\n" +
-        "  until a connection is established.\n\n" +
-        "  Common causes:\n" +
-        "   • MONGO_URI is wrong, or the Atlas cluster is paused\n" +
-        "   • Your current IP is not whitelisted in Atlas Network Access\n" +
-        "   • No internet / DNS cannot resolve the SRV record\n" +
-        "──────────────────────────────────────────────────────────────\n"
-    );
-    attachListeners();
-    scheduleReconnect();
+  if (cached.conn && isDBConnected()) {
+    return cached.conn;
   }
+
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .connect(process.env.MONGO_URI, {
+        serverSelectionTimeoutMS: 10000,
+      })
+      .then((m) => {
+        console.log("✅ MongoDB connected");
+        return m;
+      })
+      .catch((err) => {
+        // Reset so the next request can retry instead of caching a failure.
+        cached.promise = null;
+        console.error("❌ MongoDB connection failed:", err.message);
+        throw err;
+      });
+  }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
 };

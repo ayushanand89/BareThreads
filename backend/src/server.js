@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-import { connectDB, isDBConnected } from "./config/db.js";
+import { connectDB } from "./config/db.js";
 import userRoutes from "./routes/user.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
@@ -28,30 +28,35 @@ app.use(cookieParser());
 
 const PORT = process.env.PORT || 3000;
 
-//connect to MongoDB database
-connectDB();
-
 app.get("/", (req, res) => {
   res.send("Welcome to BareThreads API!");
 });
 
-// Lightweight health check (does not require the DB)
-app.get("/health", (req, res) => {
-  res.json({ status: "ok", db: isDBConnected() ? "connected" : "down" });
+// Lightweight health check — tries to connect so it reflects real status.
+app.get("/health", async (req, res) => {
+  try {
+    await connectDB();
+    res.json({ status: "ok", db: "connected" });
+  } catch {
+    res.status(503).json({ status: "ok", db: "down" });
+  }
 });
 
-// Guard DB-backed API routes: if MongoDB is unavailable, return a clear
-// 503 instead of letting requests hang or fail opaquely.
-app.use("/api", (req, res, next) => {
-  if (!isDBConnected()) {
-    return res.status(503).json({
+// Ensure the DB connection is established BEFORE handling API routes. Awaiting
+// here (rather than checking a flag) is what makes this work on serverless:
+// the connection completes within the request instead of being frozen at boot.
+app.use("/api", async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(503).json({
       success: false,
       message:
-        "Database unavailable. Check the backend MongoDB connection (see server logs).",
-      errors: [],
+        "Database unavailable. Check MONGO_URI and Atlas network access.",
+      errors: [err.message],
     });
   }
-  next();
 });
 
 // API Routes
@@ -89,6 +94,12 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on PORT ${PORT}`);
-});
+// Only start a long-running listener when NOT on Vercel (local/other hosts).
+// On Vercel the exported app is invoked as a serverless function instead.
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on PORT ${PORT}`);
+  });
+}
+
+export default app;
