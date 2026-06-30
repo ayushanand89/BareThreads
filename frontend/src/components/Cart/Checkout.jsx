@@ -123,7 +123,7 @@ const Checkout = () => {
           </h3>
 
           {/* First and Last Name */}
-          <div className="mb-4 grid grid-cols-2 gap-4">
+          <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="label-field">First Name</label>
               <input
@@ -174,7 +174,7 @@ const Checkout = () => {
           </div>
 
           {/* City and Postal Code */}
-          <div className="mb-4 grid grid-cols-2 gap-4">
+          <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="label-field">City</label>
               <input

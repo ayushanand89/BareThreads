@@ -110,7 +110,7 @@ const CollectionPage = () => {
           ref={sidebarRef}
           className={`
             fixed lg:sticky top-0 lg:top-28 left-0 z-50 lg:z-auto
-            h-full lg:h-auto w-[18rem] shrink-0 lg:self-start
+            h-full lg:h-auto w-[18rem] lg:w-56 shrink-0 lg:self-start
             bg-white lg:bg-transparent
             shadow-2xl lg:shadow-none
             overflow-y-auto lg:max-h-[calc(100vh-8rem)] hide-scrollbar

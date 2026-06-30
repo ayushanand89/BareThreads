@@ -158,8 +158,8 @@
   }
 
   ::selection {
-    background: var(--color-ink);
-    color: var(--color-cream);
+    background: var(--color-accent);
+    color: #fff;
   }
 
   /* Premium scrollbar */

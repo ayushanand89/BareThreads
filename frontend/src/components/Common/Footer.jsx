@@ -43,7 +43,7 @@ const Footer = () => {
         <Reveal className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 border-b border-ink/10 pb-12">
           <div>
             <p className="eyebrow mb-3">Elevated Everyday</p>
-            <h2 className="font-display text-5xl md:text-7xl font-semibold text-ink leading-none">
+            <h2 className="font-display text-4xl sm:text-5xl md:text-7xl font-semibold text-ink leading-none break-words">
               BareThreads
             </h2>
           </div>
@@ -65,21 +65,21 @@ const Footer = () => {
             offers. Sign up and get 10% off your first order.
           </p>
 
-          <form onSubmit={handleSubscribe} className="flex">
+          <form onSubmit={handleSubscribe} className="space-y-2.5">
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="p-3 w-full text-sm border border-ink/20 rounded-l-md bg-white focus:outline-none focus:border-ink transition-colors"
+              className="w-full p-3 text-sm border border-ink/20 rounded-md bg-white placeholder:text-stone/60 focus:outline-none focus:border-ink focus:ring-1 focus:ring-ink/15 transition-colors"
               required
             />
             <button
               type="submit"
               disabled={submitting}
-              className="bg-ink text-cream px-5 text-sm rounded-r-md hover:bg-charcoal transition-colors disabled:opacity-60"
+              className="btn-primary w-full py-2.5 text-sm"
             >
-              {submitting ? "..." : "Subscribe"}
+              {submitting ? "Subscribing..." : "Subscribe"}
             </button>
           </form>
         </div>
