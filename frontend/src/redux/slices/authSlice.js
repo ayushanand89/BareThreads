@@ -57,6 +57,25 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+// Async Thunk for Google Sign-in / Registration
+export const googleLogin = createAsyncThunk(
+  "auth/googleLogin",
+  async ({ credential }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        `${import.meta.env.VITE_BACKEND_URL}/users/google`,
+        { credential }
+      );
+      localStorage.setItem("userInfo", JSON.stringify(response.data.data.user));
+      localStorage.setItem("userToken", response.data.data.token);
+
+      return response.data.data.user;
+    } catch (error) {
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 // Slice
 const authSlice = createSlice({
   name: "auth",
@@ -100,6 +119,19 @@ const authSlice = createSlice({
         state.loading = false;
         state.error =
           action.payload?.message || "Registration failed. Please try again.";
+      })
+      .addCase(googleLogin.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(googleLogin.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(googleLogin.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload?.message || "Google sign-in failed. Please try again.";
       });
   },
 });

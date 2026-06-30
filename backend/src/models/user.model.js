@@ -20,8 +20,25 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      // Required only for local (email/password) accounts. Google users
+      // authenticate via OAuth and never have a password.
+      required: function () {
+        return !this.googleId;
+      },
       minLength: 6,
+    },
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
+    provider: {
+      type: String,
+      enum: ["local", "google"],
+      default: "local",
+    },
+    avatar: {
+      type: String,
     },
     role: {
       type: String,

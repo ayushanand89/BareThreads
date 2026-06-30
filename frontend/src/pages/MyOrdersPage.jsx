@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { fetchUserOrders } from "../redux/slices/orderSlice";
 import { Reveal } from "../components/Common/Reveal";
 
-const MyOrdersPage = () => {
+const MyOrdersPage = ({ embedded = false }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { orders, loading, error } = useSelector((state) => state.orders);
@@ -22,7 +22,9 @@ const MyOrdersPage = () => {
     return <p className="text-center py-20 text-danger">Error: {error}</p>;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 lg:px-8 py-8 lg:py-12">
+    <div
+      className={embedded ? "" : "max-w-7xl mx-auto px-4 lg:px-8 py-8 lg:py-12"}
+    >
       <Reveal>
         <p className="eyebrow mb-1.5">Your Account</p>
         <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink mb-8">
@@ -106,8 +108,19 @@ const MyOrdersPage = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={7} className="py-4 px-4 text-center text-gray-500">
-                  You have no orders
+                <td colSpan={7} className="py-16 px-4 text-center">
+                  <p className="font-heading text-ink mb-1">
+                    No orders yet
+                  </p>
+                  <p className="text-stone text-sm mb-5">
+                    When you place an order, it&apos;ll show up here.
+                  </p>
+                  <Link
+                    to="/collections/all"
+                    className="btn-primary py-2.5 px-6 text-sm"
+                  >
+                    Start Shopping
+                  </Link>
                 </td>
               </tr>
             )}

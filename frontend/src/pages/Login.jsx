@@ -4,6 +4,7 @@ import login from "../assets/login.webp";
 import { loginUser } from "../redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { mergeCart } from "../redux/slices/cartSlice";
+import GoogleAuthButton from "../components/Common/GoogleAuthButton";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -89,6 +90,8 @@ const Login = () => {
           <button type="submit" disabled={loading} className="btn-primary w-full">
             {loading ? "Signing in..." : "Sign In"}
           </button>
+
+          <GoogleAuthButton />
 
           <p className="text-center mt-6 text-sm text-stone">
             Don't have an account?{" "}

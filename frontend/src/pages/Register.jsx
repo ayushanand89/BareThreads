@@ -4,6 +4,7 @@ import register from "../assets/register.webp";
 import { registerUser } from "../redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { mergeCart } from "../redux/slices/cartSlice";
+import GoogleAuthButton from "../components/Common/GoogleAuthButton";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -103,6 +104,8 @@ const Register = () => {
           <button type="submit" disabled={loading} className="btn-primary w-full">
             {loading ? "Creating account..." : "Sign Up"}
           </button>
+
+          <GoogleAuthButton />
 
           <p className="text-center mt-6 text-sm text-stone">
             Already have an account?{" "}

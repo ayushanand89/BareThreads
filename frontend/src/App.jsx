@@ -19,6 +19,7 @@ import EditProductPage from "./components/Admin/EditProductPage";
 import OrderManagement from "./components/Admin/OrderManagement";
 
 import { Provider } from "react-redux";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import store from "./redux/store";
 import ProtectedRoute from "./components/Common/ProtectedRoute";
 import ErrorBoundary from "./components/Common/ErrorBoundary";
@@ -26,8 +27,9 @@ import ScrollToTop from "./components/Common/ScrollToTop";
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <BrowserRouter>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID || ""}>
+      <Provider store={store}>
+        <BrowserRouter>
         <ScrollToTop />
         <Toaster position="top-right" richColors />
         <ErrorBoundary>
@@ -99,8 +101,9 @@ const App = () => {
             </Route>
           </Routes>
         </ErrorBoundary>
-      </BrowserRouter>
-    </Provider>
+        </BrowserRouter>
+      </Provider>
+    </GoogleOAuthProvider>
   );
 };
 
